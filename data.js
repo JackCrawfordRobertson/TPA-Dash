@@ -253,7 +253,7 @@ function getChartColors(count) {
 function getContrastColors(count) {
     const colors = [
         '#01D6B0',
-        '#FF6B6B',
+        '#00B399',
         '#4ECDC4',
         '#45B7D1',
         '#FFA07A',

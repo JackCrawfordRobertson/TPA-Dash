@@ -13,7 +13,7 @@ const chartColors = {
     quaternary: '#006B5F',
     light: '#01F0C7',
     variants: ['#01D6B0', '#00B399', '#008B7A', '#006B5F', '#01F0C7', '#00B39F', '#00A894', '#009A89'],
-    accent: '#FF6B6B',
+    accent: '#00B399',
     text: '#FFFFFF',
     textSecondary: '#E0E0E0',
     border: '#4A5668'
@@ -461,7 +461,7 @@ if (complianceCtx) {
                     chartColors.secondary,
                     chartColors.tertiary,
                     chartColors.light,
-                    '#FF6B6B'
+                    '#00B399'
                 ],
                 borderRadius: 6,
                 borderSkipped: false,

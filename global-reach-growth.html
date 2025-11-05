@@ -363,8 +363,17 @@
     <div class="container">
         <!-- Header -->
         <div class="header">
-            <p class="header-subtitle">Global Payment Reach & Growth 2025</p>
-            <p class="header-desc">Interactive 3D globe visualization of global payment transaction values across 27 countries. Explore worldwide payment market data with 5-year historical trends and top market analysis.</p>
+            <div style="position: relative; display: flex; justify-content: center; align-items: center; margin-bottom: 1rem;">
+                <p class="header-subtitle">Global Payment Reach & Growth 2025</p>
+                <div style="position: absolute; right: 0; display: flex; align-items: center; gap: 0.75rem;">
+                    <label for="view-toggle" style="font-size: 0.85rem; color: var(--text-secondary); font-weight: 600;">View:</label>
+                    <select id="view-toggle" style="padding: 0.5rem 0.75rem; border-radius: 6px; background-color: var(--bg-tertiary); color: var(--text-primary); border: 1px solid var(--accent-primary); font-size: 0.85rem; font-weight: 600; cursor: pointer;">
+                        <option value="absolute">Absolute Transaction Values</option>
+                        <option value="percapita">Per Capita Analysis</option>
+                    </select>
+                </div>
+            </div>
+            <p class="header-desc" id="header-desc">Interactive 3D globe visualization of global payment transaction values across 144 countries. Explore worldwide payment market data with historical trends and top market analysis.</p>
         </div>
 
         <!-- Main Content -->
@@ -378,42 +387,86 @@
                 </div>
             </div>
 
-            <!-- Sidebar with Top 5 Countries -->
-            <div class="sidebar">
+            <!-- Sidebar with Top 5 Countries - Absolute View -->
+            <div class="sidebar" id="sidebar-absolute">
                 <div class="metric-pullout">
                     <div class="metric-pullout-rank">1st Rank</div>
                     <div class="metric-pullout-name">China</div>
                     <div class="metric-pullout-value">$7.81T</div>
-                    <div class="metric-pullout-label">2025 Transaction Value</div>
+                    <div class="metric-pullout-label">Transaction Value 2025</div>
                 </div>
 
                 <div class="metric-pullout">
                     <div class="metric-pullout-rank">2nd Rank</div>
                     <div class="metric-pullout-name">United States</div>
                     <div class="metric-pullout-value">$3.47T</div>
-                    <div class="metric-pullout-label">2025 Transaction Value</div>
+                    <div class="metric-pullout-label">Transaction Value 2025</div>
                 </div>
 
                 <div class="metric-pullout">
                     <div class="metric-pullout-rank">3rd Rank</div>
                     <div class="metric-pullout-name">India</div>
                     <div class="metric-pullout-value">$1.35T</div>
-                    <div class="metric-pullout-label">2025 Transaction Value</div>
+                    <div class="metric-pullout-label">Transaction Value 2025</div>
                 </div>
 
                 <div class="metric-pullout">
                     <div class="metric-pullout-rank">4th Rank</div>
                     <div class="metric-pullout-name">Japan</div>
                     <div class="metric-pullout-value">$579B</div>
-                    <div class="metric-pullout-label">2025 Transaction Value</div>
+                    <div class="metric-pullout-label">Transaction Value 2025</div>
+                </div>
+
+                <div class="metric-pullout">
+                    <div class="metric-pullout-rank">5th Rank</div>
+                    <div class="metric-pullout-name">Germany</div>
+                    <div class="metric-pullout-value">$272B</div>
+                    <div class="metric-pullout-label">Transaction Value 2025</div>
+                </div>
+            </div>
+
+            <!-- Sidebar with Top 5 Countries - Per Capita View -->
+            <div class="sidebar" id="sidebar-percapita" style="display: none;">
+                <div class="metric-pullout">
+                    <div class="metric-pullout-rank">1st Rank</div>
+                    <div class="metric-pullout-name">Iceland</div>
+                    <div class="metric-pullout-value">$14.18K</div>
+                    <div class="metric-pullout-label">Per Capita 2025</div>
+                </div>
+
+                <div class="metric-pullout">
+                    <div class="metric-pullout-rank">2nd Rank</div>
+                    <div class="metric-pullout-name">Luxembourg</div>
+                    <div class="metric-pullout-value">$11.68K</div>
+                    <div class="metric-pullout-label">Per Capita 2025</div>
+                </div>
+
+                <div class="metric-pullout">
+                    <div class="metric-pullout-rank">3rd Rank</div>
+                    <div class="metric-pullout-name">United States</div>
+                    <div class="metric-pullout-value">$10.26K</div>
+                    <div class="metric-pullout-label">Per Capita 2025</div>
+                </div>
+
+                <div class="metric-pullout">
+                    <div class="metric-pullout-rank">4th Rank</div>
+                    <div class="metric-pullout-name">Seychelles</div>
+                    <div class="metric-pullout-value">$9.40K</div>
+                    <div class="metric-pullout-label">Per Capita 2025</div>
+                </div>
+
+                <div class="metric-pullout">
+                    <div class="metric-pullout-rank">5th Rank</div>
+                    <div class="metric-pullout-name">Malta</div>
+                    <div class="metric-pullout-value">$8.64K</div>
+                    <div class="metric-pullout-label">Per Capita 2025</div>
                 </div>
             </div>
         </div>
 
         <!-- Footer -->
         <div class="footer">
-            <p>Data source:
-                <a href="https://www.statista.com/outlook/fmo/payments/digital-payments/worldwide?currency=GBP#transaction-value" target="_blank" style="color: #01D6B0; text-decoration: none; border-bottom: 1px solid #01D6B0;">Statista Market Insights
+            <p>Switch between absolute transaction values and per capita analysis. Per capita data calculated from transaction values and UN population data. Global payment reach analysis.
             </p>
         </div>
     </div>
@@ -422,8 +475,8 @@
     // Mapbox API key
     mapboxgl.accessToken = 'pk.eyJ1IjoidHBhLXZpeiIsImEiOiJjbWhtNXE0NmowandvMmlxazQ0NTNtaGRpIn0.aN_mnCiCV54rcFjRW7GNYw';
 
-    // Payment data from CSV 2025 (in billions USD)
-    const paymentData = {
+    // Absolute transaction data from CSV 2025 (in billions USD)
+    const paymentDataAbsolute = {
         "Argentina": { "2021": 43.7, "2022": 60.44, "2023": 73.86, "2024": 86.52, "2025": 101.39 },
         "Armenia": { "2021": 1.1, "2022": 1.6, "2023": 2.06, "2024": 2.36, "2025": 2.72 },
         "Australia": { "2021": 76.34, "2022": 97.31, "2023": 110.76, "2024": 123.02, "2025": 138.98 },
@@ -570,6 +623,154 @@
         "Zimbabwe": { "2021": 1.78, "2022": 2.23, "2023": 2.8, "2024": 3.19, "2025": 3.82 }
     };
 
+    // Per Capita Payment data from CSV (USD per person per country)
+    const paymentDataPerCapita = {
+        "Argentina": { "2021": 955.4, "2022": 1309.64, "2023": 1587.02, "2024": 1843.99, "2025": 2144.91 },
+        "Armenia": { "2021": 371.62, "2022": 538.72, "2023": 686.67, "2024": 778.88, "2025": 888.89 },
+        "Australia": { "2021": 2928.27, "2022": 3667.92, "2023": 4088.59, "2024": 4457.25, "2025": 4947.67 },
+        "Austria": { "2021": 1744.7, "2022": 2149.34, "2023": 2702.41, "2024": 2981.6, "2025": 3389.07 },
+        "Azerbaijan": { "2021": 315.89, "2022": 489.17, "2023": 546.6, "2024": 602.11, "2025": 688.45 },
+        "Bahrain": { "2021": 1417.65, "2022": 1947.98, "2023": 2293.79, "2024": 2467.03, "2025": 2689.84 },
+        "Bangladesh": { "2021": 110.17, "2022": 150.49, "2023": 176.73, "2024": 197.21, "2025": 228.03 },
+        "Belarus": { "2021": 367.35, "2022": 512.93, "2023": 612.13, "2024": 679.0, "2025": 766.96 },
+        "Belgium": { "2021": 2012.84, "2022": 2768.57, "2023": 3367.88, "2024": 3937.5, "2025": 4599.5 },
+        "Belize": { "2021": 1500.0, "2022": 2195.12, "2023": 2261.9, "2024": 3116.28, "2025": 3500.0 },
+        "Benin": { "2021": 75.2, "2022": 95.85, "2023": 119.59, "2024": 138.04, "2025": 157.46 },
+        "Bhutan": { "2021": 1389.61, "2022": 1884.62, "2023": 2166.67, "2024": 2569.62, "2025": 2949.37 },
+        "Bolivia": { "2021": 172.44, "2022": 230.83, "2023": 273.29, "2024": 321.37, "2025": 396.69 },
+        "Bosnia and Herzegovina": { "2021": 489.8, "2022": 671.55, "2023": 873.16, "2024": 1023.74, "2025": 1208.96 },
+        "Botswana": { "2021": 393.31, "2022": 539.09, "2023": 631.58, "2024": 733.07, "2025": 847.66 },
+        "Brazil": { "2021": 705.33, "2022": 1019.24, "2023": 1292.56, "2024": 1560.35, "2025": 1859.88 },
+        "Brunei Darussalam": { "2021": 3568.18, "2022": 4863.64, "2023": 5400.0, "2024": 6111.11, "2025": 6755.56 },
+        "Bulgaria": { "2021": 583.09, "2022": 806.31, "2023": 1037.94, "2024": 1241.17, "2025": 1469.67 },
+        "Burkina Faso": { "2021": 56.52, "2022": 72.49, "2023": 87.86, "2024": 101.84, "2025": 116.79 },
+        "Burundi": { "2021": 37.53, "2022": 50.21, "2023": 59.48, "2024": 67.04, "2025": 80.76 },
+        "Cambodia": { "2021": 127.89, "2022": 174.27, "2023": 215.36, "2024": 252.14, "2025": 294.81 },
+        "Cameroon": { "2021": 77.13, "2022": 97.53, "2023": 119.73, "2024": 136.11, "2025": 155.2 },
+        "Canada": { "2021": 2912.92, "2022": 3719.1, "2023": 4244.08, "2024": 4726.26, "2025": 5349.54 },
+        "Chad": { "2021": 54.31, "2022": 71.25, "2023": 85.12, "2024": 96.19, "2025": 106.97 },
+        "Chile": { "2021": 906.88, "2022": 1212.26, "2023": 1449.41, "2024": 1684.24, "2025": 1983.68 },
+        "China": { "2021": 2800.82, "2022": 3781.14, "2023": 4448.38, "2024": 4982.94, "2025": 5544.77 },
+        "Costa Rica": { "2021": 537.89, "2022": 704.92, "2023": 955.2, "2024": 1110.92, "2025": 1299.31 },
+        "Croatia": { "2021": 886.84, "2022": 1257.29, "2023": 1652.41, "2024": 1929.92, "2025": 2247.28 },
+        "Cuba": { "2021": 167.7, "2022": 235.5, "2023": 288.17, "2024": 326.62, "2025": 377.55 },
+        "Cyprus": { "2021": 2256.0, "2022": 2904.0, "2023": 3539.68, "2024": 4015.75, "2025": 4625.0 },
+        "Czechia": { "2021": 971.11, "2022": 1273.49, "2023": 1662.95, "2024": 1835.03, "2025": 2128.58 },
+        "Denmark": { "2021": 3921.77, "2022": 5147.21, "2023": 6001.68, "2024": 6768.33, "2025": 7676.03 },
+        "Dominican Republic": { "2021": 344.43, "2022": 493.5, "2023": 604.29, "2024": 691.91, "2025": 789.7 },
+        "Ecuador": { "2021": 227.8, "2022": 308.91, "2023": 377.03, "2024": 425.12, "2025": 491.23 },
+        "Egypt": { "2021": 152.98, "2022": 208.08, "2023": 213.89, "2024": 230.65, "2025": 242.14 },
+        "El Salvador": { "2021": 236.92, "2022": 328.22, "2023": 406.73, "2024": 477.86, "2025": 564.02 },
+        "Equatorial Guinea": { "2021": 385.14, "2022": 456.95, "2023": 512.99, "2024": 617.83, "2025": 773.58 },
+        "Estonia": { "2021": 2308.27, "2022": 3075.19, "2023": 3708.96, "2024": 4044.78, "2025": 4466.67 },
+        "Ethiopia": { "2021": 56.05, "2022": 78.27, "2023": 104.64, "2024": 109.9, "2025": 113.16 },
+        "Fiji": { "2021": 1369.57, "2022": 1945.65, "2023": 2301.08, "2024": 2709.68, "2025": 3106.38 },
+        "Finland": { "2021": 3155.64, "2022": 4202.85, "2023": 4998.23, "2024": 5739.44, "2025": 6697.02 },
+        "France": { "2021": 2454.16, "2022": 3175.56, "2023": 3660.29, "2024": 4087.48, "2025": 4598.17 },
+        "Gabon": { "2021": 383.67, "2022": 503.94, "2023": 589.35, "2024": 670.33, "2025": 731.45 },
+        "Gambia": { "2021": 103.2, "2022": 144.78, "2023": 178.34, "2024": 210.84, "2025": 242.17 },
+        "Germany": { "2021": 1579.94, "2022": 2078.93, "2023": 2451.86, "2024": 2804.64, "2025": 3275.56 },
+        "Ghana": { "2021": 120.35, "2022": 147.01, "2023": 178.57, "2024": 207.41, "2025": 241.67 },
+        "Greece": { "2021": 749.76, "2022": 973.33, "2023": 1260.21, "2024": 1444.13, "2025": 1666.67 },
+        "Guatemala": { "2021": 186.18, "2022": 251.71, "2023": 313.04, "2024": 361.06, "2025": 421.72 },
+        "Guinea": { "2021": 64.49, "2022": 88.33, "2023": 109.71, "2024": 126.5, "2025": 149.59 },
+        "Guyana": { "2021": 1085.37, "2022": 1831.33, "2023": 2352.94, "2024": 3252.87, "2025": 3820.22 },
+        "Haiti": { "2021": 116.34, "2022": 152.23, "2023": 183.48, "2024": 232.45, "2025": 294.25 },
+        "Honduras": { "2021": 145.51, "2022": 198.02, "2023": 241.05, "2024": 283.29, "2025": 323.46 },
+        "Hungary": { "2021": 752.83, "2022": 944.39, "2023": 1271.88, "2024": 1439.75, "2025": 1684.86 },
+        "Iceland": { "2021": 7868.42, "2022": 10421.05, "2023": 12000.0, "2024": 13153.85, "2025": 14175.0 },
+        "India": { "2021": 367.7, "2022": 530.4, "2023": 668.66, "2024": 788.32, "2025": 929.35 },
+        "Indonesia": { "2021": 434.47, "2022": 595.25, "2023": 730.82, "2024": 852.02, "2025": 1005.83 },
+        "Iran": { "2021": 154.37, "2022": 234.02, "2023": 276.73, "2024": 322.62, "2025": 329.48 },
+        "Iraq": { "2021": 182.82, "2022": 291.89, "2023": 321.48, "2024": 367.64, "2025": 382.8 },
+        "Ireland": { "2021": 3072.66, "2022": 4180.11, "2023": 5053.41, "2024": 5853.79, "2025": 6808.51 },
+        "Israel": { "2021": 1573.59, "2022": 2044.07, "2023": 2306.96, "2024": 2593.87, "2025": 3052.68 },
+        "Italy": { "2021": 1501.95, "2022": 2107.91, "2023": 2615.2, "2024": 3105.55, "2025": 3663.26 },
+        "Ivory Coast": { "2021": 106.83, "2022": 132.13, "2023": 164.41, "2024": 188.01, "2025": 212.23 },
+        "Jamaica": { "2021": 443.26, "2022": 640.57, "2023": 804.27, "2024": 1007.14, "2025": 1171.43 },
+        "Japan": { "2021": 2404.88, "2022": 3148.76, "2023": 3683.84, "2024": 4204.61, "2025": 4878.33 },
+        "Jordan": { "2021": 244.12, "2022": 339.22, "2023": 416.67, "2024": 483.33, "2025": 561.76 },
+        "Kazakhstan": { "2021": 386.03, "2022": 541.14, "2023": 714.72, "2024": 835.83, "2025": 976.19 },
+        "Kenya": { "2021": 107.43, "2022": 139.92, "2023": 157.97, "2024": 181.95, "2025": 210.19 },
+        "Kuwait": { "2021": 1292.74, "2022": 1943.79, "2023": 2121.78, "2024": 2297.42, "2025": 2510.54 },
+        "Kyrgyzstan": { "2021": 135.06, "2022": 209.5, "2023": 279.51, "2024": 345.19, "2025": 415.6 },
+        "Laos": { "2021": 182.28, "2022": 219.21, "2023": 259.57, "2024": 305.81, "2025": 357.79 },
+        "Latvia": { "2021": 1638.3, "2022": 2180.85, "2023": 2686.17, "2024": 2946.81, "2025": 3303.19 },
+        "Lebanon": { "2021": 224.01, "2022": 327.92, "2023": 461.96, "2024": 574.31, "2025": 653.06 },
+        "Lesotho": { "2021": 156.68, "2022": 209.09, "2023": 251.12, "2024": 292.04, "2025": 336.24 },
+        "Lithuania": { "2021": 1400.0, "2022": 1867.86, "2023": 2313.17, "2024": 2617.02, "2025": 3000.0 },
+        "Luxembourg": { "2021": 6470.59, "2022": 7742.86, "2023": 9366.2, "2024": 10369.86, "2025": 11675.68 },
+        "Madagascar": { "2021": 48.93, "2022": 67.0, "2023": 80.5, "2024": 92.92, "2025": 106.97 },
+        "Malawi": { "2021": 48.54, "2022": 62.75, "2023": 75.32, "2024": 81.36, "2025": 95.58 },
+        "Malaysia": { "2021": 969.76, "2022": 1264.2, "2023": 1457.33, "2024": 1612.97, "2025": 1806.31 },
+        "Malta": { "2021": 4181.82, "2022": 5727.27, "2023": 6910.71, "2024": 7701.75, "2025": 8637.93 },
+        "Mauritius": { "2021": 539.68, "2022": 817.46, "2023": 1056.0, "2024": 1264.0, "2025": 1508.06 },
+        "Mexico": { "2021": 532.48, "2022": 660.74, "2023": 732.25, "2024": 775.5, "2025": 868.37 },
+        "Moldova": { "2021": 427.76, "2022": 572.24, "2023": 714.69, "2024": 842.25, "2025": 1030.9 },
+        "Mongolia": { "2021": 485.55, "2022": 648.88, "2023": 779.29, "2024": 867.72, "2025": 1028.28 },
+        "Montenegro": { "2021": 2209.68, "2022": 3193.55, "2023": 3887.1, "2024": 4338.71, "2025": 4935.48 },
+        "Morocco": { "2021": 161.16, "2022": 196.03, "2023": 244.47, "2024": 280.79, "2025": 325.54 },
+        "Mozambique": { "2021": 40.74, "2022": 56.08, "2023": 68.12, "2024": 76.94, "2025": 87.93 },
+        "Myanmar": { "2021": 81.96, "2022": 110.78, "2023": 131.87, "2024": 146.55, "2025": 169.27 },
+        "Namibia": { "2021": 263.35, "2022": 334.48, "2023": 396.67, "2024": 464.52, "2025": 537.5 },
+        "Nepal": { "2021": 81.52, "2022": 113.81, "2023": 131.61, "2024": 153.3, "2025": 177.91 },
+        "Netherlands": { "2021": 2679.95, "2022": 3614.2, "2023": 4297.85, "2024": 4868.09, "2025": 5506.73 },
+        "New Zealand": { "2021": 2152.96, "2022": 2617.26, "2023": 2845.3, "2024": 3018.08, "2025": 3282.42 },
+        "Nicaragua": { "2021": 142.27, "2022": 187.67, "2023": 244.79, "2024": 292.41, "2025": 341.94 },
+        "Niger": { "2021": 42.38, "2022": 55.79, "2023": 66.75, "2024": 78.03, "2025": 88.32 },
+        "Nigeria": { "2021": 135.37, "2022": 195.52, "2023": 241.01, "2024": 275.57, "2025": 305.56 },
+        "North Macedonia": { "2021": 908.21, "2022": 1241.55, "2023": 1519.42, "2024": 1694.17, "2025": 1922.33 },
+        "Norway": { "2021": 4196.04, "2022": 5561.28, "2023": 6537.65, "2024": 7405.87, "2025": 8379.9 },
+        "Oman": { "2021": 712.67, "2022": 1038.89, "2023": 1180.0, "2024": 1308.93, "2025": 1414.04 },
+        "Pakistan": { "2021": 77.03, "2022": 102.77, "2023": 114.53, "2024": 132.84, "2025": 152.21 },
+        "Panama": { "2021": 612.11, "2022": 838.5, "2023": 1039.22, "2024": 1186.7, "2025": 1372.09 },
+        "Papua New Guinea": { "2021": 131.07, "2022": 186.57, "2023": 208.97, "2024": 233.42, "2025": 262.42 },
+        "Paraguay": { "2021": 296.4, "2022": 376.47, "2023": 443.02, "2024": 467.42, "2025": 530.06 },
+        "Philippines": { "2021": 374.08, "2022": 501.58, "2023": 596.93, "2024": 687.25, "2025": 800.87 },
+        "Poland": { "2021": 1335.1, "2022": 1912.55, "2023": 2425.96, "2024": 2919.79, "2025": 3493.87 },
+        "Portugal": { "2021": 877.65, "2022": 1127.52, "2023": 1460.0, "2024": 1681.17, "2025": 1940.79 },
+        "Puerto Rico": { "2021": 1283.44, "2022": 1733.12, "2023": 2159.61, "2024": 2460.53, "2025": 2826.67 },
+        "Republic of the Congo": { "2021": 105.35, "2022": 136.71, "2023": 152.62, "2024": 177.44, "2025": 199.22 },
+        "Romania": { "2021": 536.83, "2022": 705.6, "2023": 963.48, "2024": 1154.68, "2025": 1368.19 },
+        "Russia": { "2021": 395.49, "2022": 605.6, "2023": 653.53, "2024": 751.61, "2025": 818.45 },
+        "Rwanda": { "2021": 56.66, "2022": 77.88, "2023": 96.11, "2024": 105.49, "2025": 119.21 },
+        "Saudi Arabia": { "2021": 851.16, "2022": 1247.49, "2023": 1598.19, "2024": 1930.0, "2025": 2296.46 },
+        "Senegal": { "2021": 90.27, "2022": 116.05, "2023": 141.21, "2024": 161.91, "2025": 186.51 },
+        "Serbia": { "2021": 486.21, "2022": 660.87, "2023": 890.01, "2024": 1034.68, "2025": 1187.59 },
+        "Seychelles": { "2021": 4400.0, "2022": 5400.0, "2023": 7600.0, "2024": 7800.0, "2025": 9400.0 },
+        "Sierra Leone": { "2021": 58.04, "2022": 75.19, "2023": 85.74, "2024": 101.29, "2025": 116.52 },
+        "Singapore": { "2021": 4541.81, "2022": 5769.23, "2023": 6502.51, "2024": 7067.32, "2025": 7852.09 },
+        "Slovakia": { "2021": 963.44, "2022": 1182.48, "2023": 1560.0, "2024": 1771.32, "2025": 2030.8 },
+        "Slovenia": { "2021": 1674.42, "2022": 2101.38, "2023": 2651.38, "2024": 2954.55, "2025": 3333.33 },
+        "South Africa": { "2021": 167.42, "2022": 233.77, "2023": 287.89, "2024": 338.12, "2025": 397.81 },
+        "South Korea": { "2021": 2652.95, "2022": 3309.19, "2023": 3694.99, "2024": 4012.02, "2025": 4470.36 },
+        "Spain": { "2021": 1950.43, "2022": 2489.29, "2023": 2836.79, "2024": 3153.54, "2025": 3558.31 },
+        "Sri Lanka": { "2021": 166.74, "2022": 192.63, "2023": 244.02, "2024": 298.79, "2025": 354.51 },
+        "Sudan": { "2021": 58.22, "2022": 78.3, "2023": 100.9, "2024": 109.51, "2025": 133.94 },
+        "Suriname": { "2021": 1557.38, "2022": 2098.36, "2023": 2524.59, "2024": 3080.65, "2025": 3645.16 },
+        "Sweden": { "2021": 3544.68, "2022": 4769.89, "2023": 5723.85, "2024": 6624.18, "2025": 7655.17 },
+        "Switzerland": { "2021": 2793.06, "2022": 3523.81, "2023": 4426.7, "2024": 5019.46, "2025": 5636.07 },
+        "Taiwan": { "2021": 1971.52, "2022": 2510.65, "2023": 2843.33, "2024": 3131.72, "2025": 3488.73 },
+        "Tajikistan": { "2021": 97.49, "2022": 139.38, "2023": 173.13, "2024": 210.09, "2025": 265.36 },
+        "Tanzania": { "2021": 57.83, "2022": 77.2, "2023": 93.19, "2024": 102.84, "2025": 117.84 },
+        "Thailand": { "2021": 62.1, "2022": 86.59, "2023": 106.35, "2024": 125.31, "2025": 147.29 },
+        "Timor-Leste": { "2021": 382.55, "2022": 412.9, "2023": 447.2, "2024": 508.98, "2025": 545.98 },
+        "Togo": { "2021": 62.24, "2022": 81.51, "2023": 99.05, "2024": 114.96, "2025": 131.99 },
+        "Tunisia": { "2021": 168.01, "2022": 205.37, "2023": 257.19, "2024": 298.93, "2025": 346.88 },
+        "Turkey": { "2021": 551.96, "2022": 730.45, "2023": 865.97, "2024": 993.84, "2025": 1164.86 },
+        "Turkmenistan": { "2021": 363.5, "2022": 522.39, "2023": 646.8, "2024": 756.72, "2025": 909.22 },
+        "Uganda": { "2021": 53.86, "2022": 72.76, "2023": 91.14, "2024": 105.56, "2025": 125.81 },
+        "Ukraine": { "2021": 216.64, "2022": 245.26, "2023": 326.32, "2024": 379.27, "2025": 453.96 },
+        "United Arab Emirates": { "2021": 2544.26, "2022": 3474.26, "2023": 4205.38, "2024": 4890.64, "2025": 5667.81 },
+        "United Kingdom": { "2021": 4269.66, "2022": 5540.58, "2023": 6408.74, "2024": 7185.46, "2025": 8115.7 },
+        "United States": { "2021": 5903.78, "2022": 7449.29, "2023": 8388.51, "2024": 9188.31, "2025": 10256.53 },
+        "Uruguay": { "2021": 755.75, "2022": 1083.33, "2023": 1376.44, "2024": 1563.22, "2025": 1752.87 },
+        "Uzbekistan": { "2021": 120.46, "2022": 170.65, "2023": 217.97, "2024": 260.36, "2025": 314.77 },
+        "Vietnam": { "2021": 405.22, "2022": 547.26, "2023": 653.89, "2024": 752.74, "2025": 872.02 },
+        "Zambia": { "2021": 64.0, "2022": 91.51, "2023": 102.77, "2024": 109.0, "2025": 125.19 },
+        "Zimbabwe": { "2021": 105.58, "2022": 128.75, "2023": 157.3, "2024": 174.32, "2025": 202.98 }
+    };
+
     // Initialize map
     const map = new mapboxgl.Map({
         container: 'map',
@@ -651,6 +852,7 @@
             if (!response.ok) throw new Error('Failed to fetch GeoJSON');
 
             geoJsonData = await response.json();
+            const paymentData = getPaymentData();
 
             let minValue = Infinity, maxValue = 0;
             Object.values(paymentData).forEach(data => {
@@ -689,12 +891,83 @@
         }
     }
 
-    // Format currency
-    function formatCurrency(value) {
-        if (value >= 1000) return (value / 1000).toFixed(2) + 'T';
-        if (value >= 1) return value.toFixed(0) + 'B';
-        return value.toFixed(0) + 'M';
+    // Current view mode
+    let currentView = 'absolute';
+
+    // Get current payment data based on view
+    function getPaymentData() {
+        return currentView === 'absolute' ? paymentDataAbsolute : paymentDataPerCapita;
     }
+
+    // Format currency based on view
+    function formatCurrency(value) {
+        if (currentView === 'absolute') {
+            if (value >= 1000) return '$' + (value / 1000).toFixed(2) + 'T';
+            if (value >= 1) return '$' + value.toFixed(0) + 'B';
+            return '$' + value.toFixed(0) + 'M';
+        } else {
+            if (value >= 10000) return '$' + (value / 1000).toFixed(1) + 'K';
+            if (value >= 1000) return '$' + (value / 1000).toFixed(2) + 'K';
+            if (value >= 1) return '$' + value.toFixed(0);
+            return '$' + value.toFixed(2);
+        }
+    }
+
+    // Update header description based on view
+    function updateHeaderDescription() {
+        const descElement = document.getElementById('header-desc');
+        if (currentView === 'absolute') {
+            descElement.textContent = 'Interactive 3D globe visualization of global payment transaction values across 144 countries. Explore worldwide payment market data with historical trends and top market analysis.';
+        } else {
+            descElement.textContent = 'Interactive 3D globe visualization showing per capita payment transaction values across 144 countries. Discover which nations have the highest digital payment engagement per person, with historical trends and top performer analysis.';
+        }
+    }
+
+    // Toggle view and refresh map
+    function switchView(newView) {
+        if (newView === currentView) return;
+
+        currentView = newView;
+        updateHeaderDescription();
+
+        // Toggle sidebars
+        document.getElementById('sidebar-absolute').style.display = currentView === 'absolute' ? 'flex' : 'none';
+        document.getElementById('sidebar-percapita').style.display = currentView === 'percapita' ? 'flex' : 'none';
+
+        // Refresh map colors
+        if (map.isSourceLoaded('countries')) {
+            refreshMapColors();
+        }
+    }
+
+    // Refresh map colors based on current data
+    function refreshMapColors() {
+        const paymentData = getPaymentData();
+        let minValue = Infinity, maxValue = 0;
+
+        Object.values(paymentData).forEach(data => {
+            const val = data['2025'];
+            minValue = Math.min(minValue, val);
+            maxValue = Math.max(maxValue, val);
+        });
+
+        // Update feature colors
+        geoJsonData.features.forEach((feature, index) => {
+            let countryName = feature.properties.ADMIN || feature.properties.NAME || '';
+            if (countryNameMap[countryName]) countryName = countryNameMap[countryName];
+
+            if (paymentData[countryName]) {
+                const value = paymentData[countryName]['2025'];
+                const color = getColorForValue(value, minValue, maxValue);
+                map.setFeatureState({ source: 'countries', id: index }, { color: color });
+            }
+        });
+    }
+
+    // Handle view toggle dropdown
+    document.getElementById('view-toggle').addEventListener('change', function(e) {
+        switchView(e.target.value);
+    });
 
     // Initialize map and load data
     map.on('load', async function() {
