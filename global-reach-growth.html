@@ -373,7 +373,7 @@
                     </select>
                 </div>
             </div>
-            <p class="header-desc" id="header-desc">Interactive 3D globe visualization of global payment transaction values across 144 countries. Explore worldwide payment market data with historical trends and top market analysis.</p>
+            <p class="header-desc" id="header-desc">Interactive 3D globe visualisation of global payment transaction values across 144 countries. Explore worldwide payment market data with historical trends and top market analysis.</p>
         </div>
 
         <!-- Main Content -->
@@ -784,7 +784,7 @@
         maxZoom: 4
     });
 
-    // Keep globe centered when zooming
+    // Keep globe centred when zooming
     map.on('zoom', function() {
         if (Math.abs(map.getCenter().lng) > 10 || Math.abs(map.getCenter().lat) > 30) {
             map.setCenter([0, 20]);
@@ -917,9 +917,9 @@
     function updateHeaderDescription() {
         const descElement = document.getElementById('header-desc');
         if (currentView === 'absolute') {
-            descElement.textContent = 'Interactive 3D globe visualization of global payment transaction values across 144 countries. Explore worldwide payment market data with historical trends and top market analysis.';
+            descElement.textContent = 'Interactive 3D globe visualisation of global payment transaction values across 144 countries. Explore worldwide payment market data with historical trends and top market analysis.';
         } else {
-            descElement.textContent = 'Interactive 3D globe visualization showing per capita payment transaction values across 144 countries. Discover which nations have the highest digital payment engagement per person, with historical trends and top performer analysis.';
+            descElement.textContent = 'Interactive 3D globe visualisation showing per capita payment transaction values across 144 countries. Discover which nations have the highest digital payment engagement per person, with historical trends and top performer analysis.';
         }
     }
 
