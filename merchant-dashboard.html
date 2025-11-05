@@ -1,9 +1,10 @@
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>The Payments Association - Industry Overview</title>
+    <title>Merchant Overview - Payment Difficulties Dashboard</title>
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     <link href="https://fonts.googleapis.com/css2?family=Helvetica:wght@400;500;600;700&display=swap" rel="stylesheet">
     <style>
@@ -295,9 +296,9 @@
     <div class="container">
         <!-- Header -->
         <div class="header">
-            <h1>The Payments Association</h1>
-            <p class="header-subtitle">Industry Overview Dashboard 2025</p>
-            <p class="header-desc">Comprehensive snapshot of the global payments industry, covering market outlook, investment priorities, AI adoption, workforce trends, and compliance costs based on latest industry surveys and research.</p>
+            <h1>Merchant Overview Dashboard</h1>
+            <p class="header-subtitle">At a Glance: Merchant Difficulties & Market Dynamics 2025</p>
+            <p class="header-desc">Comprehensive overview of merchant challenges, payment processing landscape, and emerging opportunities. Covers card networks, digital wallets, BNPL adoption, cryptocurrency integration, and service fee pressures impacting merchant profitability globally.</p>
         </div>
 
         <!-- Main Content -->
@@ -305,72 +306,72 @@
             <!-- Key Metrics -->
             <div class="metrics-row">
                 <div class="metric-card">
-                    <div class="metric-value">75%</div>
-                    <div class="metric-label">Positive/Neutral Outlook</div>
+                    <div class="metric-value">4.7B</div>
+                    <div class="metric-label">Visa Cards in Circulation</div>
                 </div>
                 <div class="metric-card">
-                    <div class="metric-value">53%</div>
-                    <div class="metric-label">AI/ML Investment Priority</div>
+                    <div class="metric-value">3.2B</div>
+                    <div class="metric-label">Mastercard Cards</div>
                 </div>
                 <div class="metric-card">
-                    <div class="metric-value">85%</div>
-                    <div class="metric-label">AI Fraud Detection Use</div>
+                    <div class="metric-value">$6.58T</div>
+                    <div class="metric-label">Visa Purchase Volume US</div>
                 </div>
                 <div class="metric-card">
-                    <div class="metric-value">$61B</div>
-                    <div class="metric-label">Compliance Cost (US/CA)</div>
+                    <div class="metric-value">4.3B</div>
+                    <div class="metric-label">Digital Wallet Users</div>
                 </div>
                 <div class="metric-card">
-                    <div class="metric-value">4.76M</div>
-                    <div class="metric-label">Cybersecurity Gap</div>
+                    <div class="metric-value">$560B</div>
+                    <div class="metric-label">BNPL Market Value 2025</div>
                 </div>
                 <div class="metric-card">
-                    <div class="metric-value">$3T</div>
-                    <div class="metric-label">Projected 2030 Revenue</div>
+                    <div class="metric-value">91%</div>
+                    <div class="metric-label">Digital Wallet Adoption (India)</div>
                 </div>
                 <div class="metric-card">
-                    <div class="metric-value">55%</div>
-                    <div class="metric-label">Budget Increase Expected</div>
+                    <div class="metric-value">$314B</div>
+                    <div class="metric-label">Stablecoin Market Cap</div>
                 </div>
                 <div class="metric-card">
-                    <div class="metric-value">25%</div>
-                    <div class="metric-label">Compliance Spending Max</div>
+                    <div class="metric-value">3.5%</div>
+                    <div class="metric-label">Credit Card Service Fee Range</div>
                 </div>
             </div>
 
-            <!-- Budget Priorities Chart -->
+            <!-- Card Network Distribution -->
             <div class="chart-card">
-                <div class="chart-title">Budget Investment Priorities</div>
-                <p style="font-size: 0.8rem; color: #9CA3AF; margin-bottom: 1rem;">PAY360 2025 State of the Industry Survey (2025) - Investment focus areas</p>
+                <div class="chart-title">Payment Card Networks in Circulation</div>
+                <p style="font-size: 0.8rem; color: #9CA3AF; margin-bottom: 1rem;">CoinLaw & Industry Reports (2024-2025) - Global card distribution</p>
                 <div class="chart-container">
-                    <canvas id="budgetChart"></canvas>
+                    <canvas id="cardNetworkChart"></canvas>
                 </div>
             </div>
 
-            <!-- Industry Outlook Chart -->
+            <!-- Digital Wallet Adoption -->
             <div class="chart-card">
-                <div class="chart-title">Industry Sentiment 2025</div>
-                <p style="font-size: 0.8rem; color: #9CA3AF; margin-bottom: 1rem;">PAY360 2025 Survey (2025) - Business outlook for next 12 months</p>
+                <div class="chart-title">Digital Wallet Adoption by Region</div>
+                <p style="font-size: 0.8rem; color: #9CA3AF; margin-bottom: 1rem;">ElectroniQ Digital Wallet Statistics (2024) - Regional adoption rates</p>
                 <div class="chart-container">
-                    <canvas id="outlookChart"></canvas>
+                    <canvas id="walletAdoptionChart"></canvas>
                 </div>
             </div>
 
-            <!-- Top AI Use Cases -->
+            <!-- BNPL Market Growth -->
             <div class="chart-card">
-                <div class="chart-title">Leading AI Implementations</div>
-                <p style="font-size: 0.8rem; color: #9CA3AF; margin-bottom: 1rem;">Senior Payment Professionals Survey (2024-2025) - Adoption rates</p>
+                <div class="chart-title">BNPL Market Growth Trajectory</div>
+                <p style="font-size: 0.8rem; color: #9CA3AF; margin-bottom: 1rem;">Research and Markets BNPL Report (2022-2029) - Market growth forecast</p>
                 <div class="chart-container">
-                    <canvas id="aiChart"></canvas>
+                    <canvas id="bnplGrowthChart"></canvas>
                 </div>
             </div>
 
-            <!-- Challenges Trend -->
+            <!-- Merchant Service Fees -->
             <div class="chart-card">
-                <div class="chart-title">Main Industry Challenges</div>
-                <p style="font-size: 0.8rem; color: #9CA3AF; margin-bottom: 1rem;">PAY360 State of Industry Survey (2023-2025) - Year-on-year comparison</p>
+                <div class="chart-title">Merchant Service Fee Comparison</div>
+                <p style="font-size: 0.8rem; color: #9CA3AF; margin-bottom: 1rem;">The Motley Fool Merchant Service Comparison (2025) - Fee analysis</p>
                 <div class="chart-container">
-                    <canvas id="challengesChart"></canvas>
+                    <canvas id="serviceFeesChart"></canvas>
                 </div>
             </div>
         </div>
@@ -378,15 +379,15 @@
         <!-- Footer -->
         <div class="footer">
             <p>Data sources:
-                <a href="https://thepaymentsassociation.org/article/2025-pay360-state-of-the-industry-survey/" target="_blank" style="color: #01D6B0; text-decoration: none; border-bottom: 1px solid #01D6B0;">PAY360 2025</a> |
-                <a href="https://thepaymentsassociation.org/article/financial-crime-360-state-of-the-industry-report-2025/" target="_blank" style="color: #01D6B0; text-decoration: none; border-bottom: 1px solid #01D6B0;">Financial Crime 360</a> |
-                <a href="https://www.isc2.org/Insights/2024/10/ISC2-2024-Cybersecurity-Workforce-Study" target="_blank" style="color: #01D6B0; text-decoration: none; border-bottom: 1px solid #01D6B0;">ISC2 Cybersecurity Study</a> |
-                <a href="https://www.mckinsey.com/industries/financial-services/our-insights/global-payments-report" target="_blank" style="color: #01D6B0; text-decoration: none; border-bottom: 1px solid #01D6B0;">McKinsey Global Payments</a>
+                <a href="https://coinlaw.io/" target="_blank" style="color: #01D6B0; text-decoration: none; border-bottom: 1px solid #01D6B0;">CoinLaw</a> |
+                <a href="https://capitaloneshopping.com/research/" target="_blank" style="color: #01D6B0; text-decoration: none; border-bottom: 1px solid #01D6B0;">Capital One Shopping</a> |
+                <a href="https://www.consumerfinancialprotectionbureau.gov/" target="_blank" style="color: #01D6B0; text-decoration: none; border-bottom: 1px solid #01D6B0;">CFPB</a> |
+                <a href="https://offers.worldpayglobal.com/" target="_blank" style="color: #01D6B0; text-decoration: none; border-bottom: 1px solid #01D6B0;">WorldPay</a> |
+                <a href="https://www.globenewswire.com/" target="_blank" style="color: #01D6B0; text-decoration: none; border-bottom: 1px solid #01D6B0;">Research and Markets</a>
             </p>
         </div>
     </div>
 
-    <script src="data.js"></script>
     <script>
         // Chart.js Configuration
         Chart.defaults.font.family = "-apple-system, BlinkMacSystemFont, 'Helvetica Neue', Helvetica, Arial, sans-serif";
@@ -404,16 +405,17 @@
             textSecondary: '#E0E0E0'
         };
 
-        // 1. Budget Priorities Chart
-        const budgetCtx = document.getElementById('budgetChart');
-        if (budgetCtx) {
-            new Chart(budgetCtx, {
+        // 1. Card Network Distribution
+        const cardNetworkCtx = document.getElementById('cardNetworkChart');
+        if (cardNetworkCtx) {
+            new Chart(cardNetworkCtx, {
                 type: 'bar',
                 data: {
-                    labels: ['Digitalisation &\nTechnology', 'AI/ML Financial\nCrime', 'Partnerships &\nCollaborations', 'Customer\nExperience'],
+                    labels: ['Visa', 'Mastercard', 'UnionPay', 'American Express', 'Discover'],
                     datasets: [{
-                        data: [45, 53, 21, 11],
-                        backgroundColor: [chartColors.primary, chartColors.light, chartColors.secondary, chartColors.tertiary],
+                        label: 'Cards in Circulation (Billions)',
+                        data: [4.7, 3.158, 9.6, 0.141, 0.0715],
+                        backgroundColor: [chartColors.primary, chartColors.light, chartColors.secondary, chartColors.tertiary, '#FF6B6B'],
                         borderRadius: 5,
                         borderWidth: 0
                     }]
@@ -432,19 +434,19 @@
                             borderColor: '#01D6B0',
                             borderWidth: 1,
                             callbacks: {
-                                label: (context) => context.parsed.x + '%'
+                                label: (context) => context.parsed.x.toFixed(2) + 'B cards'
                             }
                         }
                     },
                     scales: {
                         x: {
                             beginAtZero: true,
-                            max: 60,
+                            max: 10,
                             grid: { color: '#3A4655' },
                             ticks: {
                                 color: '#E0E0E0',
                                 font: { size: 10 },
-                                callback: (value) => value + '%'
+                                callback: (value) => value + 'B'
                             }
                         },
                         y: {
@@ -456,54 +458,26 @@
             });
         }
 
-        // 2. Industry Outlook Chart
-        const outlookCtx = document.getElementById('outlookChart');
-        if (outlookCtx) {
-            new Chart(outlookCtx, {
-                type: 'doughnut',
-                data: {
-                    labels: ['Positive', 'Very Positive', 'Combined Positive/Neutral', 'Negative'],
-                    datasets: [{
-                        data: [55, 20, 75, 4],
-                        backgroundColor: [chartColors.primary, chartColors.light, chartColors.secondary, '#4A5668'],
-                        borderColor: '#28313E',
-                        borderWidth: 2
-                    }]
-                },
-                options: {
-                    responsive: true,
-                    maintainAspectRatio: false,
-                    plugins: {
-                        legend: {
-                            position: 'bottom',
-                            labels: { padding: 12, font: { size: 10, weight: '500' }, color: '#E0E0E0' }
-                        },
-                        tooltip: {
-                            backgroundColor: '#323D4D',
-                            padding: 10,
-                            titleColor: '#FFFFFF',
-                            bodyColor: '#E0E0E0',
-                            borderColor: '#01D6B0',
-                            borderWidth: 1,
-                            callbacks: {
-                                label: (context) => context.label + ': ' + context.parsed + '%'
-                            }
-                        }
-                    }
-                }
-            });
-        }
-
-        // 3. AI Use Cases Chart
-        const aiCtx = document.getElementById('aiChart');
-        if (aiCtx) {
-            new Chart(aiCtx, {
+        // 2. Digital Wallet Adoption by Region
+        const walletAdoptionCtx = document.getElementById('walletAdoptionChart');
+        if (walletAdoptionCtx) {
+            new Chart(walletAdoptionCtx, {
                 type: 'bar',
                 data: {
-                    labels: ['Fraud Detection', 'Transaction\nMonitoring', 'Customer\nExperience', 'Predictive\nAnalytics', 'Dynamic Pricing', 'Chatbot/AI'],
+                    labels: ['India', 'Indonesia', 'Thailand', 'Hong Kong', 'Philippines', 'Malaysia', 'Singapore', 'China'],
                     datasets: [{
-                        data: [85, 55, 54, 51, 45, 45],
-                        backgroundColor: chartColors.variants,
+                        label: 'Adoption Rate (%)',
+                        data: [91, 90, 89, 88, 88, 87, 80, 84],
+                        backgroundColor: [
+                            chartColors.primary,
+                            chartColors.light,
+                            chartColors.secondary,
+                            chartColors.tertiary,
+                            chartColors.quaternary,
+                            '#01D6B0',
+                            '#00B399',
+                            '#008B7A'
+                        ],
                         borderRadius: 5,
                         borderWidth: 0
                     }]
@@ -546,63 +520,32 @@
             });
         }
 
-        // 4. Challenges Trend Chart
-        const challengesCtx = document.getElementById('challengesChart');
-        if (challengesCtx) {
-            new Chart(challengesCtx, {
+        // 3. BNPL Market Growth
+        const bnplGrowthCtx = document.getElementById('bnplGrowthChart');
+        if (bnplGrowthCtx) {
+            new Chart(bnplGrowthCtx, {
                 type: 'line',
                 data: {
-                    labels: ['2023', '2024', '2025'],
-                    datasets: [
-                        {
-                            label: 'Financial Crime & Cybersecurity',
-                            data: [21, 28, 30],
-                            borderColor: chartColors.primary,
-                            backgroundColor: chartColors.primary + '10',
-                            borderWidth: 3,
-                            pointRadius: 4,
-                            pointBackgroundColor: chartColors.primary,
-                            pointBorderColor: '#28313E',
-                            pointBorderWidth: 2,
-                            tension: 0.4,
-                            fill: false
-                        },
-                        {
-                            label: 'Compliance',
-                            data: [25, 18, 16],
-                            borderColor: chartColors.secondary,
-                            backgroundColor: chartColors.secondary + '10',
-                            borderWidth: 3,
-                            pointRadius: 4,
-                            pointBackgroundColor: chartColors.secondary,
-                            pointBorderColor: '#28313E',
-                            pointBorderWidth: 2,
-                            tension: 0.4,
-                            fill: false
-                        },
-                        {
-                            label: 'Digital Transformation',
-                            data: [14, 10, 13],
-                            borderColor: chartColors.tertiary,
-                            backgroundColor: chartColors.tertiary + '10',
-                            borderWidth: 3,
-                            pointRadius: 4,
-                            pointBackgroundColor: chartColors.tertiary,
-                            pointBorderColor: '#28313E',
-                            pointBorderWidth: 2,
-                            tension: 0.4,
-                            fill: false
-                        }
-                    ]
+                    labels: ['2022', '2024', '2025', '2026', '2029'],
+                    datasets: [{
+                        label: 'BNPL Market Value (Billion USD)',
+                        data: [130, 231.5, 560, 800, 1430],
+                        borderColor: chartColors.primary,
+                        backgroundColor: chartColors.primary + '15',
+                        borderWidth: 3,
+                        pointRadius: 5,
+                        pointBackgroundColor: chartColors.primary,
+                        pointBorderColor: '#28313E',
+                        pointBorderWidth: 2,
+                        tension: 0.4,
+                        fill: true
+                    }]
                 },
                 options: {
                     responsive: true,
                     maintainAspectRatio: false,
                     plugins: {
-                        legend: {
-                            position: 'bottom',
-                            labels: { padding: 10, font: { size: 9, weight: '500' }, color: '#E0E0E0' }
-                        },
+                        legend: { display: false },
                         tooltip: {
                             backgroundColor: '#323D4D',
                             padding: 10,
@@ -611,19 +554,19 @@
                             borderColor: '#01D6B0',
                             borderWidth: 1,
                             callbacks: {
-                                label: (context) => context.dataset.label + ': ' + context.parsed.y + '%'
+                                label: (context) => '$' + context.parsed.y.toLocaleString() + 'B'
                             }
                         }
                     },
                     scales: {
                         y: {
                             beginAtZero: true,
-                            max: 35,
+                            max: 1500,
                             grid: { color: '#3A4655' },
                             ticks: {
                                 color: '#E0E0E0',
                                 font: { size: 10 },
-                                callback: (value) => value + '%'
+                                callback: (value) => '$' + (value / 100).toFixed(0) + '00B'
                             }
                         },
                         x: {
@@ -634,6 +577,76 @@
                 }
             });
         }
+
+        // 4. Merchant Service Fees Comparison
+        const serviceFeesCtx = document.getElementById('serviceFeesChart');
+        if (serviceFeesCtx) {
+            new Chart(serviceFeesCtx, {
+                type: 'bar',
+                data: {
+                    labels: ['Credit Card', 'Debit Card', 'BNPL', 'Digital Wallet', 'Crypto/Stablecoin'],
+                    datasets: [{
+                        label: 'Service Fee Range (%)',
+                        data: [2.5, 1.0, 4.25, 1.5, 0.5],
+                        backgroundColor: [
+                            chartColors.primary,
+                            chartColors.light,
+                            '#FF6B6B',
+                            chartColors.secondary,
+                            chartColors.tertiary
+                        ],
+                        borderRadius: 5,
+                        borderWidth: 0
+                    }]
+                },
+                options: {
+                    indexAxis: 'y',
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    plugins: {
+                        legend: { display: false },
+                        tooltip: {
+                            backgroundColor: '#323D4D',
+                            padding: 10,
+                            titleColor: '#FFFFFF',
+                            bodyColor: '#E0E0E0',
+                            borderColor: '#01D6B0',
+                            borderWidth: 1,
+                            callbacks: {
+                                label: (context) => {
+                                    const fees = [
+                                        '1.5%-3.5%',
+                                        '0.5%-1.5%',
+                                        '1.5%-7.0%',
+                                        '1.0%-2.0%',
+                                        '0.01% + optional'
+                                    ];
+                                    return 'Range: ' + fees[context.dataIndex];
+                                }
+                            }
+                        }
+                    },
+                    scales: {
+                        x: {
+                            beginAtZero: true,
+                            max: 5,
+                            grid: { color: '#3A4655' },
+                            ticks: {
+                                color: '#E0E0E0',
+                                font: { size: 10 },
+                                callback: (value) => value + '%'
+                            }
+                        },
+                        y: {
+                            grid: { display: false },
+                            ticks: { color: '#E0E0E0', font: { size: 10, weight: '500' } }
+                        }
+                    }
+                }
+            });
+        }
+
+        console.log('Merchant dashboard charts initialized');
     </script>
 </body>
 </html>
