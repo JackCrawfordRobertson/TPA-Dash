@@ -1,0 +1,157 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>The Payments Association - Industry Dashboard</title>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Helvetica:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <div class="dashboard-container">
+        <!-- Header -->
+        <header class="dashboard-header">
+            <div class="header-content">
+                <h1>The Payments Association</h1>
+                <p class="subtitle">Industry Outlook & Metrics Dashboard 2025</p>
+            </div>
+        </header>
+
+        <!-- Main Grid -->
+        <main class="dashboard-grid">
+
+            <!-- Industry Outlook Card -->
+            <section class="card">
+                <div class="card-header">
+                    <h2>Industry Outlook 2025</h2>
+                    <p class="card-meta">PAY360 Survey</p>
+                </div>
+                <div class="chart-container">
+                    <canvas id="outlookChart"></canvas>
+                </div>
+            </section>
+
+            <!-- Budget Priorities Card -->
+            <section class="card">
+                <div class="card-header">
+                    <h2>Budget Priorities</h2>
+                    <p class="card-meta">Investment Focus Areas</p>
+                </div>
+                <div class="chart-container">
+                    <canvas id="budgetChart"></canvas>
+                </div>
+            </section>
+
+            <!-- AI Adoption Card -->
+            <section class="card">
+                <div class="card-header">
+                    <h2>Top AI Use Cases</h2>
+                    <p class="card-meta">Payment Professionals Survey</p>
+                </div>
+                <div class="chart-container">
+                    <canvas id="aiChart"></canvas>
+                </div>
+            </section>
+
+            <!-- Challenges Trend Card -->
+            <section class="card">
+                <div class="card-header">
+                    <h2>Industry Challenges Trend</h2>
+                    <p class="card-meta">2023-2025</p>
+                </div>
+                <div class="chart-container">
+                    <canvas id="challengesChart"></canvas>
+                </div>
+            </section>
+
+            <!-- Workforce Skills Card -->
+            <section class="card">
+                <div class="card-header">
+                    <h2>Workforce Skills Priorities</h2>
+                    <p class="card-meta">Skills Gap Analysis</p>
+                </div>
+                <div class="chart-container">
+                    <canvas id="workforceChart"></canvas>
+                </div>
+            </section>
+
+            <!-- Revenue Growth Card -->
+            <section class="card">
+                <div class="card-header">
+                    <h2>Global Payments Revenue</h2>
+                    <p class="card-meta">2014-2030 Projection</p>
+                </div>
+                <div class="chart-container">
+                    <canvas id="revenueChart"></canvas>
+                </div>
+            </section>
+
+            <!-- Compliance Spending Card -->
+            <section class="card">
+                <div class="card-header">
+                    <h2>Compliance Cost Indicators</h2>
+                    <p class="card-meta">Financial Services Industry</p>
+                </div>
+                <div class="chart-container">
+                    <canvas id="complianceChart"></canvas>
+                </div>
+            </section>
+
+            <!-- Key Metrics Card -->
+            <section class="card metrics-card">
+                <div class="card-header">
+                    <h2>Key Metrics</h2>
+                    <p class="card-meta">Critical Industry Figures</p>
+                </div>
+                <div class="metrics-grid">
+                    <div class="metric">
+                        <div class="metric-value">4.76M</div>
+                        <div class="metric-label">Global Cybersecurity Gap</div>
+                        <div class="metric-subtext">2024</div>
+                    </div>
+                    <div class="metric">
+                        <div class="metric-value">$61B</div>
+                        <div class="metric-label">Financial Crime Compliance Cost</div>
+                        <div class="metric-subtext">US & Canada 2024</div>
+                    </div>
+                    <div class="metric">
+                        <div class="metric-value">$3T</div>
+                        <div class="metric-label">Global Payments Revenue</div>
+                        <div class="metric-subtext">Projected 2030</div>
+                    </div>
+                    <div class="metric">
+                        <div class="metric-value">160K</div>
+                        <div class="metric-label">UK Workers Requiring Upskilling</div>
+                        <div class="metric-subtext">2025</div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Data Sources Card -->
+            <section class="card sources-card">
+                <div class="card-header">
+                    <h2>Primary Data Sources</h2>
+                </div>
+                <ul class="sources-list">
+                    <li><strong>The Payments Association</strong> - PAY360 2025 State of the Industry Survey</li>
+                    <li><strong>The Payments Association</strong> - Financial Crime 360 Report 2025</li>
+                    <li><strong>Federal Reserve Bank</strong> - St. Louis Study on Compliance Costs</li>
+                    <li><strong>ISC2</strong> - 2024 Cybersecurity Workforce Study</li>
+                    <li><strong>McKinsey & Company</strong> - 2025 Global Payments Report</li>
+                    <li><strong>LexisNexis Risk Solutions</strong> - True Cost of Financial Crime Compliance Study</li>
+                </ul>
+            </section>
+
+        </main>
+
+        <!-- Footer -->
+        <footer class="dashboard-footer">
+            <p>The Payments Association Industry Dashboard | Data as of November 2025</p>
+        </footer>
+    </div>
+
+    <script src="data.js"></script>
+    <script src="charts.js"></script>
+</body>
+</html>
