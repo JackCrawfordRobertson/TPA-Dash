@@ -71,6 +71,81 @@
             text-align: center;
         }
 
+        /* Color Gradient Legend - Map Widget */
+        .color-legend {
+            position: absolute;
+            top: 20px;
+            right: 20px;
+            display: flex;
+            flex-direction: column;
+            gap: 6px;
+            padding: 12px 14px;
+            background: rgba(40, 49, 62, 0.96);
+            border: 1px solid var(--accent-primary);
+            border-radius: 8px;
+            backdrop-filter: blur(10px);
+            box-shadow: 0 4px 12px rgba(1, 214, 176, 0.2);
+            z-index: 10;
+            pointer-events: auto;
+            max-width: 420px;
+            min-width: 350px;
+        }
+
+        .legend-title {
+            font-size: 0.7rem;
+            color: var(--accent-primary);
+            text-transform: uppercase;
+            font-weight: 700;
+            letter-spacing: 0.5px;
+            margin-bottom: 2px;
+        }
+
+        .legend-content {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .legend-label {
+            font-size: 0.65rem;
+            color: var(--text-tertiary);
+            text-transform: uppercase;
+            font-weight: 600;
+            letter-spacing: 0.5px;
+            min-width: 22px;
+        }
+
+        .legend-bar-container {
+            flex: 1;
+        }
+
+        .legend-bar {
+            width: 100%;
+            height: 18px;
+            border-radius: 3px;
+            background: linear-gradient(90deg, #006B5F 0%, #01D6B0 100%);
+            border: 1px solid var(--accent-primary);
+            box-shadow: 0 2px 6px rgba(1, 214, 176, 0.15);
+        }
+
+        .legend-values {
+            display: flex;
+            justify-content: space-between;
+            font-size: 0.65rem;
+            color: var(--text-secondary);
+            font-weight: 600;
+            text-align: center;
+            margin-top: 3px;
+        }
+
+        .legend-value-min {
+            flex: 0 0 auto;
+        }
+
+        .legend-value-max {
+            flex: 0 0 auto;
+        }
+
         /* Main Content */
         .content {
             flex: 1;
@@ -258,6 +333,38 @@
                 font-size: 0.8rem;
             }
 
+            .color-legend {
+                top: 16px;
+                right: 16px;
+                padding: 10px 12px;
+                max-width: 340px;
+                min-width: 300px;
+                gap: 5px;
+            }
+
+            .legend-title {
+                font-size: 0.65rem;
+                margin-bottom: 1px;
+            }
+
+            .legend-label {
+                font-size: 0.6rem;
+                min-width: 20px;
+            }
+
+            .legend-bar {
+                height: 16px;
+            }
+
+            .legend-values {
+                font-size: 0.6rem;
+                margin-top: 2px;
+            }
+
+            .legend-content {
+                gap: 6px;
+            }
+
             .content {
                 padding: 1rem;
                 gap: 0.75rem;
@@ -393,6 +500,20 @@
             <!-- Map Widget -->
             <div class="map-widget">
                 <div id="map"></div>
+                <div class="color-legend" id="color-legend">
+                    <div class="legend-title" id="legend-title">Color Scale</div>
+                    <div class="legend-content">
+                        <span class="legend-label">Low</span>
+                        <div class="legend-bar-container">
+                            <div class="legend-bar"></div>
+                            <div class="legend-values">
+                                <span class="legend-value-min" id="legend-min">$0</span>
+                                <span class="legend-value-max" id="legend-max">$7.81T</span>
+                            </div>
+                        </div>
+                        <span class="legend-label">High</span>
+                    </div>
+                </div>
                 <div class="tooltip" id="tooltip" style="position: fixed;">
                     <div class="tooltip-title" id="tooltip-country"></div>
                     <div class="tooltip-chart-container">
@@ -922,12 +1043,36 @@
         }
     }
 
+    // Update legend with min/max values
+    function updateLegendValues() {
+        const paymentData = getPaymentData();
+        let minValue = Infinity, maxValue = 0;
+
+        Object.values(paymentData).forEach(data => {
+            const val = data['2025'];
+            minValue = Math.min(minValue, val);
+            maxValue = Math.max(maxValue, val);
+        });
+
+        document.getElementById('legend-min').textContent = formatCurrency(minValue);
+        document.getElementById('legend-max').textContent = formatCurrency(maxValue);
+
+        // Update legend title based on view
+        const legendTitle = document.getElementById('legend-title');
+        if (currentView === 'absolute') {
+            legendTitle.textContent = 'Payment Value';
+        } else {
+            legendTitle.textContent = 'Per Capita Value';
+        }
+    }
+
     // Toggle view and refresh map
     function switchView(newView) {
         if (newView === currentView) return;
 
         currentView = newView;
         updateHeaderDescription();
+        updateLegendValues();
 
         // Toggle sidebars
         document.getElementById('sidebar-absolute').style.display = currentView === 'absolute' ? 'flex' : 'none';
@@ -972,6 +1117,9 @@
     map.on('load', async function() {
         const success = await loadGeoJson();
         if (!success) return;
+
+        // Update legend on load
+        updateLegendValues();
 
         map.addSource('countries', {
             type: 'geojson',
