@@ -6,6 +6,7 @@
     <title>Global Payment Reach & Growth</title>
     <script src='https://api.mapbox.com/mapbox-gl-js/v2.15.0/mapbox-gl.js'></script>
     <link href='https://api.mapbox.com/mapbox-gl-js/v2.15.0/mapbox-gl.css' rel='stylesheet' />
+    <script src='https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.js'></script>
     <link href="https://fonts.googleapis.com/css2?family=Helvetica:wght@400;500;600;700&display=swap" rel="stylesheet">
     <style>
         * {
@@ -325,7 +326,7 @@
             z-index: 100;
             border: 1px solid var(--accent-primary);
             backdrop-filter: blur(10px);
-            max-width: 300px;
+            width: 340px;
             display: none;
             box-shadow: 0 4px 12px rgba(1, 214, 176, 0.2);
         }
@@ -337,6 +338,17 @@
             color: var(--accent-primary);
             border-bottom: 2px solid var(--accent-primary);
             padding-bottom: 8px;
+        }
+
+        .tooltip-chart-container {
+            position: relative;
+            height: 180px;
+            margin: 12px 0 0 0;
+            width: 100%;
+        }
+
+        .tooltip-chart-container canvas {
+            max-height: 180px;
         }
 
         .tooltip-row {
@@ -383,7 +395,9 @@
                 <div id="map"></div>
                 <div class="tooltip" id="tooltip" style="position: fixed;">
                     <div class="tooltip-title" id="tooltip-country"></div>
-                    <div id="tooltip-data"></div>
+                    <div class="tooltip-chart-container">
+                        <canvas id="tooltip-chart"></canvas>
+                    </div>
                 </div>
             </div>
 
@@ -820,8 +834,14 @@
         const darkTeal = '#006B5F';
         const brightTeal = '#01D6B0';
         if (max === min) return brightTeal;
-        const normalized = (value - min) / (max - min);
-        return interpolateColor(darkTeal, brightTeal, normalized);
+
+        // Use logarithmic scale for better color distribution across wide value ranges
+        const logMin = Math.log(Math.max(min, 0.1));
+        const logMax = Math.log(max);
+        const logValue = Math.log(Math.max(value, 0.1));
+
+        const normalized = (logValue - logMin) / (logMax - logMin);
+        return interpolateColor(darkTeal, brightTeal, Math.max(0, Math.min(1, normalized)));
     }
 
     // Load GeoJSON
@@ -982,6 +1002,125 @@
         // Hover interactions
         const tooltip = document.getElementById('tooltip');
         let hoveredFeatureId = null;
+        let tooltipChart = null;
+
+        // Create bar chart for tooltip
+        function createTooltipChart(countryData) {
+            const canvas = document.getElementById('tooltip-chart');
+            const ctx = canvas.getContext('2d');
+
+            // Destroy existing chart if any
+            if (tooltipChart) {
+                tooltipChart.destroy();
+            }
+
+            const years = ['2021', '2022', '2023', '2024', '2025'];
+            const values = years.map(year => countryData.data[year]);
+
+            // Custom plugin to draw labels on bars
+            const labelPlugin = {
+                id: 'barLabels',
+                afterDatasetsDraw(chart) {
+                    const { ctx, data, chartArea } = chart;
+                    ctx.font = 'bold 11px sans-serif';
+                    ctx.fillStyle = '#01D6B0';
+                    ctx.textAlign = 'center';
+                    ctx.textBaseline = 'bottom';
+
+                    data.datasets.forEach((dataset, datasetIndex) => {
+                        const meta = chart.getDatasetMeta(datasetIndex);
+                        meta.data.forEach((datapoint, index) => {
+                            const value = dataset.data[index];
+                            if (value !== null && value !== undefined) {
+                                const { x, y } = datapoint.getProps(['x', 'y']);
+                                const label = formatCurrency(value);
+                                ctx.fillText(label, x, y - 8);
+                            }
+                        });
+                    });
+                }
+            };
+
+            tooltipChart = new Chart(ctx, {
+                type: 'bar',
+                data: {
+                    labels: years,
+                    datasets: [{
+                        label: currentView === 'absolute' ? 'Transaction Value' : 'Per Capita Value',
+                        data: values,
+                        backgroundColor: '#01D6B0',
+                        borderColor: '#00B399',
+                        borderWidth: 2,
+                        borderRadius: 4,
+                        borderSkipped: false
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    layout: {
+                        padding: {
+                            top: 25
+                        }
+                    },
+                    plugins: {
+                        legend: {
+                            display: false
+                        },
+                        tooltip: {
+                            callbacks: {
+                                label: function(context) {
+                                    return formatCurrency(context.parsed.y);
+                                }
+                            },
+                            backgroundColor: 'rgba(40, 49, 62, 0.95)',
+                            borderColor: '#01D6B0',
+                            borderWidth: 1,
+                            titleColor: '#01D6B0',
+                            bodyColor: '#E0E0E0',
+                            padding: 8,
+                            titleFont: { weight: 'bold', size: 12 },
+                            bodyFont: { size: 11 }
+                        }
+                    },
+                    scales: {
+                        y: {
+                            beginAtZero: true,
+                            ticks: {
+                                color: '#9CA3AF',
+                                font: { size: 11 },
+                                callback: function(value) {
+                                    if (currentView === 'absolute') {
+                                        if (value >= 1000) return '$' + (value / 1000).toFixed(1) + 'T';
+                                        if (value >= 1) return '$' + value.toFixed(0) + 'B';
+                                        return '$' + value.toFixed(0) + 'M';
+                                    } else {
+                                        if (value >= 10000) return '$' + (value / 1000).toFixed(0) + 'K';
+                                        if (value >= 1000) return '$' + (value / 1000).toFixed(1) + 'K';
+                                        return '$' + value.toFixed(0);
+                                    }
+                                }
+                            },
+                            grid: {
+                                color: 'rgba(74, 86, 104, 0.3)',
+                                drawBorder: false
+                            }
+                        },
+                        x: {
+                            ticks: {
+                                color: '#9CA3AF',
+                                font: { size: 11 }
+                            },
+                            grid: {
+                                display: false,
+                                drawBorder: false
+                            }
+                        }
+                    }
+                },
+                plugins: [labelPlugin]
+            });
+        }
 
         map.on('mousemove', 'countries-fill', function(e) {
             if (e.features.length > 0) {
@@ -995,20 +1134,7 @@
                 const countryData = countryDataMap.get(hoveredFeatureId);
                 if (countryData) {
                     document.getElementById('tooltip-country').textContent = countryData.name;
-                    const years = ['2021', '2022', '2023', '2024', '2025'];
-                    let html = '';
-                    years.forEach(year => {
-                        const value = countryData.data[year];
-                        if (value !== undefined) {
-                            html += `
-                                <div class="tooltip-row">
-                                    <span class="tooltip-year">${year}</span>
-                                    <span class="tooltip-value">${formatCurrency(value)}</span>
-                                </div>
-                            `;
-                        }
-                    });
-                    document.getElementById('tooltip-data').innerHTML = html;
+                    createTooltipChart(countryData);
                     tooltip.style.display = 'block';
                 }
 
@@ -1023,6 +1149,10 @@
             }
             hoveredFeatureId = null;
             tooltip.style.display = 'none';
+            if (tooltipChart) {
+                tooltipChart.destroy();
+                tooltipChart = null;
+            }
         });
 
         document.addEventListener('mousemove', function(e) {

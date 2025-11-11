@@ -12,7 +12,7 @@ const chartColors = {
     tertiary: '#008B7A',
     quaternary: '#006B5F',
     light: '#01F0C7',
-    variants: ['#01D6B0', '#00B399', '#008B7A', '#006B5F', '#01F0C7', '#00B39F', '#00A894', '#009A89'],
+    variants: ['#01D6B0', '#00wB399', '#008B7A', '#006B5F', '#01F0C7', '#00B39F', '#00A894', '#009A89'],
     accent: '#00B399',
     text: '#FFFFFF',
     textSecondary: '#E0E0E0',
