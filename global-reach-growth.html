@@ -818,7 +818,7 @@
         <!-- Main Content -->
         <div class="content">
             <!-- Map Widget -->
-            <div class="map-widget">
+            <div class="map-widget" id="map-widget-container">
                 <div id="map"></div>
                 <button class="legend-toggle" id="legend-toggle" aria-label="Toggle color legend">⚙</button>
                 <div class="color-legend" id="color-legend">
@@ -1214,8 +1214,17 @@
         "Zimbabwe": { "2021": 105.58, "2022": 128.75, "2023": 157.3, "2024": 174.32, "2025": 202.98 }
     };
 
-   // Initialize map
-    const map = new mapboxgl.Map({
+    // Lazy Loading Setup: Only initialize map when it comes into view
+    let mapInitialized = false;
+    let map = null;
+
+    function initializeMap() {
+        if (mapInitialized) return;
+        mapInitialized = true;
+
+        try {
+            // Initialize map
+            map = new mapboxgl.Map({
         container: 'map',
         style: 'mapbox://styles/mapbox/dark-v11',
         center: [0, 10],
@@ -1711,6 +1720,30 @@
             }
         });
     });
+        } catch (error) {
+            console.error('Error initializing map:', error);
+        }
+    }
+
+    // Set up Intersection Observer for lazy loading
+    const mapContainer = document.getElementById('map-widget-container');
+    if (mapContainer) {
+        const observerOptions = {
+            root: null,
+            rootMargin: '50px', // Start loading 50px before map comes into view
+            threshold: 0.01
+        };
+
+        const mapObserver = new IntersectionObserver(function(entries) {
+            entries.forEach(entry => {
+                if (entry.isIntersecting && !mapInitialized) {
+                    initializeMap();
+                }
+            });
+        }, observerOptions);
+
+        mapObserver.observe(mapContainer);
+    }
 </script>
 
 </body>
