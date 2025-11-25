@@ -161,7 +161,9 @@
 </head>
 <body>
 
-<div id="map"></div>
+<div id="map-widget-container">
+    <div id="map"></div>
+</div>
 
 <div class="tooltip" id="tooltip">
     <div class="tooltip-title" id="tooltip-country"></div>
@@ -227,8 +229,22 @@
         "Nigeria": { "2021": 8, "2022": 12, "2023": 18, "2024": 25, "2025": 35 }
     };
 
-    // Initialize map
-    const map = new mapboxgl.Map({
+    // Lazy Loading Setup: Only initialize map when it comes into view
+    let mapInitialized = false;
+    let map = null;
+
+    // Detect if mobile device
+    function isMobileDevice() {
+        return /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent) || window.innerWidth <= 768;
+    }
+
+    function initializeMap() {
+        if (mapInitialized) return;
+        mapInitialized = true;
+
+        try {
+            // Initialize map
+            map = new mapboxgl.Map({
         container: 'map',
         style: 'mapbox://styles/mapbox/dark-v11',
         center: [0, 20],
@@ -237,8 +253,18 @@
         bearing: 0,
         projection: 'globe',
         minZoom: 0.5,
-        maxZoom: 4
+        maxZoom: 4,
+        touchZoom: !isMobileDevice(), // Disable touch zoom on mobile
+        touchPitch: !isMobileDevice()  // Disable touch pitch on mobile
     });
+
+            // On mobile, disable drag and pitch rotation to prevent interference with page scrolling
+            if (isMobileDevice()) {
+                map.dragPan.disable();
+                map.dragRotate.disable();
+                map.touchZoom.disable();
+                map.touchPitch.disable();
+            }
 
     // Keep globe centered when zooming
     map.on('zoom', function() {
@@ -542,6 +568,30 @@
             }
         });
     });
+        } catch (error) {
+            console.error('Error initializing map:', error);
+        }
+    }
+
+    // Set up Intersection Observer for lazy loading
+    const mapContainer = document.getElementById('map-widget-container');
+    if (mapContainer) {
+        const observerOptions = {
+            root: null,
+            rootMargin: '50px', // Start loading 50px before map comes into view
+            threshold: 0.01
+        };
+
+        const mapObserver = new IntersectionObserver(function(entries) {
+            entries.forEach(entry => {
+                if (entry.isIntersecting && !mapInitialized) {
+                    initializeMap();
+                }
+            });
+        }, observerOptions);
+
+        mapObserver.observe(mapContainer);
+    }
 </script>
 
 </body>
