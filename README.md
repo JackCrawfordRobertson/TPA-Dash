@@ -10,39 +10,52 @@ A professional, iframe-embeddable HTML dashboard displaying key metrics and insi
 - **Iframe Compatible**: Easily embed in other web applications
 - **Data-Driven**: Comprehensive metrics from 2025 industry reports
 
-## Files
+## Project Structure
 
-- `index.html` - Main dashboard HTML file
-- `styles.css` - Complete styling with responsive design
-- `data.js` - Data definitions and helper functions
-- `charts.js` - Chart.js initialization and configuration
-- `README.md` - This file
-
-## Usage
-
-### Standalone
-Open `index.html` directly in a web browser:
-```bash
-open /Users/JackRobertson/TPA-Dash/index.html
+```
+├── pages/                      # HTML files
+│   ├── index.html             # Main dashboard
+│   ├── report-dashboard.html
+│   ├── merchant-dashboard.html
+│   └── ... (other dashboards)
+├── static/
+│   ├── css/
+│   │   └── styles.css         # All styling
+│   └── js/
+│       ├── data.js            # Data definitions
+│       └── charts.js          # Chart initialization
+├── data/                       # CSV data files
+├── scripts/                    # Python utilities
+└── README.md
 ```
 
-### Embedding in iframe
-Add the following code to your HTML:
-```html
-<iframe
-    src="https://yourdomain.com/TPA-Dash/index.html"
-    width="1400"
-    height="2000"
-    frameborder="0"
-    allow="fullscreen">
-</iframe>
-```
+## Quick Start
 
-### Local Testing with Python
+### Run Local Server (Recommended)
 ```bash
 cd /Users/JackRobertson/TPA-Dash
 python3 -m http.server 8000
-# Then visit: http://localhost:8000
+```
+Then open your browser and visit:
+- Main Dashboard: `http://localhost:8000/pages/index.html`
+- Report Dashboard: `http://localhost:8000/pages/report-dashboard.html`
+- Other Pages: `http://localhost:8000/pages/`
+
+### Direct File Access
+Open any HTML file directly in your browser:
+```bash
+open pages/index.html
+```
+Note: Some features may not work with `file://` protocol due to browser security.
+
+### Embed in iframe
+```html
+<iframe
+    src="http://localhost:8000/pages/index.html"
+    width="1400"
+    height="2000"
+    frameborder="0">
+</iframe>
 ```
 
 ## Dashboard Sections
