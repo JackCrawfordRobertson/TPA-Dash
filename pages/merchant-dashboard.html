@@ -400,6 +400,19 @@
             tertiary: '#008B7A',
             quaternary: '#006B5F',
             light: '#01F0C7',
+            // Enhanced multi-step green gradient for better visual distinction between bars
+            greenVariants: [
+                '#004F47',    // Very dark green (darkest)
+                '#006B5F',    // Dark green
+                '#008878',    // Medium-dark green
+                '#00A896',    // Medium green
+                '#00C4AB',    // Medium-bright green
+                '#01D6B0',    // Bright teal-green
+                '#01E5BB',    // Brighter green
+                '#01F0C7',    // Brightest pale green
+                '#20F5D1',    // Ultra bright green (additional for more bars)
+                '#3AF9D9'     // Super bright (10+ bars)
+            ],
             variants: ['#01D6B0', '#00B399', '#008B7A', '#006B5F', '#01F0C7', '#00B39F'],
             text: '#FFFFFF',
             textSecondary: '#E0E0E0'
@@ -415,7 +428,7 @@
                     datasets: [{
                         label: 'Cards in Circulation (Billions)',
                         data: [4.7, 3.158, 9.6, 0.141, 0.0715],
-                        backgroundColor: [chartColors.primary, chartColors.light, chartColors.secondary, chartColors.tertiary, '#00B399'],
+                        backgroundColor: chartColors.greenVariants.slice(0, 5),
                         borderRadius: 5,
                         borderWidth: 0
                     }]
@@ -468,16 +481,7 @@
                     datasets: [{
                         label: 'Adoption Rate (%)',
                         data: [91, 90, 89, 88, 88, 87, 80, 84],
-                        backgroundColor: [
-                            chartColors.primary,
-                            chartColors.light,
-                            chartColors.secondary,
-                            chartColors.tertiary,
-                            chartColors.quaternary,
-                            '#01D6B0',
-                            '#00B399',
-                            '#008B7A'
-                        ],
+                        backgroundColor: chartColors.greenVariants.slice(0, 8),
                         borderRadius: 5,
                         borderWidth: 0
                     }]
