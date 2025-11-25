@@ -123,7 +123,7 @@
             width: 100%;
             height: 18px;
             border-radius: 3px;
-            background: linear-gradient(90deg, #006B5F 0%, #01D6B0 100%);
+            background: linear-gradient(90deg, #004F47 0%, #006B5F 33%, #00A896 67%, #01D6B0 85%, #01F0C7 100%);
             border: 1px solid var(--accent-primary);
             box-shadow: 0 2px 6px rgba(1, 214, 176, 0.15);
         }
@@ -1283,17 +1283,33 @@
     }
 
     function getColorForValue(value, min, max) {
-        const darkTeal = '#006B5F';
-        const brightTeal = '#01D6B0';
-        if (max === min) return brightTeal;
+        // Multi-step teal gradient for better visual distinction
+        const colorStops = [
+            { pos: 0.0, color: '#004F47' },   // Very dark teal (low values)
+            { pos: 0.33, color: '#006B5F' },  // Dark teal (low-medium)
+            { pos: 0.67, color: '#00A896' },  // Medium teal (medium-high)
+            { pos: 0.85, color: '#01D6B0' },  // Bright teal (high values)
+            { pos: 1.0, color: '#01F0C7' }    // Pale bright teal (top values - USA/China)
+        ];
+
+        if (max === min) return colorStops[colorStops.length - 1].color;
 
         // Use logarithmic scale for better color distribution across wide value ranges
         const logMin = Math.log(Math.max(min, 0.1));
         const logMax = Math.log(max);
         const logValue = Math.log(Math.max(value, 0.1));
+        const normalized = Math.max(0, Math.min(1, (logValue - logMin) / (logMax - logMin)));
 
-        const normalized = (logValue - logMin) / (logMax - logMin);
-        return interpolateColor(darkTeal, brightTeal, Math.max(0, Math.min(1, normalized)));
+        // Find the two color stops to interpolate between
+        for (let i = 0; i < colorStops.length - 1; i++) {
+            if (normalized >= colorStops[i].pos && normalized <= colorStops[i + 1].pos) {
+                const range = colorStops[i + 1].pos - colorStops[i].pos;
+                const factor = (normalized - colorStops[i].pos) / range;
+                return interpolateColor(colorStops[i].color, colorStops[i + 1].color, factor);
+            }
+        }
+
+        return colorStops[colorStops.length - 1].color;
     }
 
     // Load GeoJSON
