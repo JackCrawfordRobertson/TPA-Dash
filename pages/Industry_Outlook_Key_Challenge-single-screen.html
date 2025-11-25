@@ -399,6 +399,19 @@
             tertiary: '#008B7A',
             quaternary: '#006B5F',
             light: '#01F0C7',
+            // Enhanced multi-step green gradient for better visual distinction between bars
+            greenVariants: [
+                '#004F47',    // Very dark green (darkest)
+                '#006B5F',    // Dark green
+                '#008878',    // Medium-dark green
+                '#00A896',    // Medium green
+                '#00C4AB',    // Medium-bright green
+                '#01D6B0',    // Bright teal-green
+                '#01E5BB',    // Brighter green
+                '#01F0C7',    // Brightest pale green
+                '#20F5D1',    // Ultra bright green (additional for more bars)
+                '#3AF9D9'     // Super bright (10+ bars)
+            ],
             variants: ['#01D6B0', '#00B399', '#008B7A', '#006B5F', '#01F0C7', '#00B39F'],
             text: '#FFFFFF',
             textSecondary: '#E0E0E0'
@@ -413,7 +426,7 @@
                     labels: ['Digitalisation &\nTechnology', 'AI/ML Financial\nCrime', 'Partnerships &\nCollaborations', 'Customer\nExperience'],
                     datasets: [{
                         data: [45, 53, 21, 11],
-                        backgroundColor: [chartColors.primary, chartColors.light, chartColors.secondary, chartColors.tertiary],
+                        backgroundColor: chartColors.greenVariants.slice(0, 4),
                         borderRadius: 5,
                         borderWidth: 0
                     }]
@@ -503,7 +516,7 @@
                     labels: ['Fraud Detection', 'Transaction\nMonitoring', 'Customer\nExperience', 'Predictive\nAnalytics', 'Dynamic Pricing', 'Chatbot/AI'],
                     datasets: [{
                         data: [85, 55, 54, 51, 45, 45],
-                        backgroundColor: chartColors.variants,
+                        backgroundColor: chartColors.greenVariants.slice(0, 6),
                         borderRadius: 5,
                         borderWidth: 0
                     }]
