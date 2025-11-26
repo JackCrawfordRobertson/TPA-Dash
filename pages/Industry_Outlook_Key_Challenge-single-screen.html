@@ -423,10 +423,10 @@
             new Chart(budgetCtx, {
                 type: 'bar',
                 data: {
-                    labels: ['Digitalisation &\nTechnology', 'AI/ML Financial\nCrime', 'Partnerships &\nCollaborations', 'Customer\nExperience'],
+                    labels: ['AI', 'Cross-border\npayments', 'Real-time\npayments', 'Personalisation &\ncustomer experience', 'Connected/embedded\ncommerce', 'Open banking', 'Other', 'Digital currencies', 'Digital wallets', 'Blockchain\ntechnology', 'Financial inclusion\n& ESG'],
                     datasets: [{
-                        data: [45, 53, 21, 11],
-                        backgroundColor: chartColors.greenVariants.slice(0, 4),
+                        data: [18, 12, 12, 11, 10, 8, 8, 7, 6, 4, 4],
+                        backgroundColor: chartColors.greenVariants.slice(0, 11),
                         borderRadius: 5,
                         borderWidth: 0
                     }]
@@ -445,24 +445,23 @@
                             borderColor: '#01D6B0',
                             borderWidth: 1,
                             callbacks: {
-                                label: (context) => context.parsed.x + '%'
+                                label: (context) => context.parsed.x
                             }
                         }
                     },
                     scales: {
                         x: {
                             beginAtZero: true,
-                            max: 60,
+                            max: 20,
                             grid: { color: '#3A4655' },
                             ticks: {
                                 color: '#E0E0E0',
-                                font: { size: 10 },
-                                callback: (value) => value + '%'
+                                font: { size: 10 }
                             }
                         },
                         y: {
                             grid: { display: false },
-                            ticks: { color: '#E0E0E0', font: { size: 10, weight: '500' } }
+                            ticks: { color: '#E0E0E0', font: { size: 9, weight: '500' } }
                         }
                     }
                 }
