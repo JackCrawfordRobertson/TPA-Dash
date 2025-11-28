@@ -687,17 +687,29 @@
         .tooltip {
             background: rgba(40, 49, 62, 0.98);
             color: #fff;
-            padding: 16px;
-            border-radius: 8px;
+            padding: 20px;
+            border-radius: 12px;
             font-size: 12px;
             pointer-events: auto;
             z-index: 100;
             border: 1px solid var(--accent-primary);
             backdrop-filter: blur(10px);
-            width: 340px;
+            width: 380px;
             display: none;
-            box-shadow: 0 4px 12px rgba(1, 214, 176, 0.2);
+            box-shadow: 0 8px 24px rgba(1, 214, 176, 0.25), 0 0 0 1px rgba(1, 214, 176, 0.1);
             position: fixed;
+            animation: tooltipFadeIn 0.2s ease-out;
+        }
+
+        @keyframes tooltipFadeIn {
+            from {
+                opacity: 0;
+                transform: translateY(-10px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
         }
 
         /* Mobile tooltip modal style */
@@ -710,11 +722,22 @@
                 bottom: auto !important;
                 transform: translate(-50%, -50%);
                 width: calc(100% - 32px);
-                max-width: 380px;
+                max-width: 400px;
                 max-height: 85vh;
                 overflow-y: auto;
                 border-radius: 12px;
                 padding: 20px;
+            }
+
+            @keyframes tooltipFadeIn {
+                from {
+                    opacity: 0;
+                    transform: translate(-50%, -50%) scale(0.95);
+                }
+                to {
+                    opacity: 1;
+                    transform: translate(-50%, -50%) scale(1);
+                }
             }
         }
 
@@ -747,13 +770,38 @@
             transform: scale(0.95);
         }
 
-        .tooltip-title {
-            font-weight: 700;
-            font-size: 14px;
-            margin-bottom: 12px;
-            color: var(--accent-primary);
+        .tooltip-header {
             border-bottom: 2px solid var(--accent-primary);
-            padding-bottom: 8px;
+            padding-bottom: 12px;
+            margin-bottom: 12px;
+        }
+
+        .tooltip-rank {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            background: linear-gradient(135deg, var(--accent-primary), var(--accent-secondary));
+            color: #0A1628;
+            font-weight: 800;
+            font-size: 11px;
+            padding: 4px 10px;
+            border-radius: 12px;
+            letter-spacing: 0.5px;
+            margin-bottom: 8px;
+            box-shadow: 0 2px 8px rgba(1, 214, 176, 0.3);
+        }
+
+        .tooltip-country-name {
+            font-weight: 700;
+            font-size: 16px;
+            color: #fff;
+            margin-bottom: 6px;
+        }
+
+        .tooltip-current-value {
+            font-weight: 600;
+            font-size: 20px;
+            color: var(--accent-primary);
         }
 
         .tooltip-chart-container {
@@ -837,7 +885,11 @@
                 </div>
                 <div class="tooltip" id="tooltip" style="position: fixed;">
                     <button class="tooltip-close" id="tooltip-close" aria-label="Close tooltip">×</button>
-                    <div class="tooltip-title" id="tooltip-country"></div>
+                    <div class="tooltip-header">
+                        <div class="tooltip-rank" id="tooltip-rank"></div>
+                        <div class="tooltip-country-name" id="tooltip-country"></div>
+                        <div class="tooltip-current-value" id="tooltip-value"></div>
+                    </div>
                     <div class="tooltip-chart-container">
                         <canvas id="tooltip-chart"></canvas>
                     </div>
@@ -1649,7 +1701,17 @@
         function showTooltip(featureId, e) {
             const countryData = countryDataMap.get(featureId);
             if (countryData) {
+                // Calculate rank based on current value
+                const allCountries = Array.from(countryDataMap.values());
+                const sortedCountries = allCountries.sort((a, b) => b.value - a.value);
+                const rank = sortedCountries.findIndex(c => c.name === countryData.name) + 1;
+                const totalCountries = sortedCountries.length;
+
+                // Update tooltip elements
+                document.getElementById('tooltip-rank').textContent = `Ranked ${rank} of ${totalCountries}`;
                 document.getElementById('tooltip-country').textContent = countryData.name;
+                document.getElementById('tooltip-value').textContent = formatCurrency(countryData.value);
+
                 createTooltipChart(countryData);
                 tooltip.style.display = 'block';
 
