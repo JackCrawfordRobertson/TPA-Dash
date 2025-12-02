@@ -6,6 +6,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Merchant Overview - Payment Difficulties Dashboard</title>
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chartjs-plugin-datalabels@2.2.0"></script>
     <link href="https://fonts.googleapis.com/css2?family=Helvetica:wght@400;500;600;700&display=swap" rel="stylesheet">
     <style>
         * {
@@ -98,6 +99,11 @@
             padding: 1.25rem;
             text-align: center;
             transition: all 0.3s ease;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            min-height: 100px;
         }
 
         .metric-card:hover {
@@ -119,6 +125,7 @@
             font-weight: 600;
             text-transform: uppercase;
             letter-spacing: 0.5px;
+            line-height: 1.3;
         }
 
         /* Chart Cards */
@@ -179,6 +186,11 @@
             background: var(--accent-secondary);
         }
 
+        /* Wide Chart Spanning */
+        .chart-card-wide {
+            grid-column: span 2;
+        }
+
         /* Responsive Design */
         @media (max-width: 1400px) {
             .content {
@@ -192,6 +204,10 @@
                 grid-template-columns: 1fr;
                 grid-template-rows: auto;
                 gap: 1rem;
+            }
+
+            .chart-card-wide {
+                grid-column: span 1;
             }
 
             .header {
@@ -240,6 +256,7 @@
 
             .metric-card {
                 padding: 1rem;
+                min-height: 90px;
             }
 
             .metric-value {
@@ -248,6 +265,14 @@
 
             .chart-card {
                 padding: 1rem;
+            }
+
+            .chart-card-wide {
+                padding: 1rem;
+            }
+
+            .chart-card-wide .chart-container {
+                min-height: 320px;
             }
 
             .chart-title {
@@ -283,6 +308,10 @@
                 grid-template-columns: 1fr;
             }
 
+            .metric-card {
+                min-height: 85px;
+            }
+
             .metric-value {
                 font-size: 1.35rem;
             }
@@ -291,6 +320,14 @@
                 padding: 0.75rem;
                 gap: 0.75rem;
             }
+
+            .chart-card-wide .chart-container {
+                min-height: 360px;
+            }
+
+            .chart-title {
+                font-size: 0.85rem;
+            }
         }
     </style>
 </head>
@@ -298,7 +335,6 @@
     <div class="container">
         <!-- Header -->
         <div class="header">
-            <p class="header-subtitle">At a Glance: Merchant Difficulties & Market Dynamics 2025</p>
             <p class="header-desc">Comprehensive overview of merchant challenges, payment processing landscape, and emerging opportunities. Covers card networks, digital wallets, BNPL adoption, cryptocurrency integration, and service fee pressures impacting merchant profitability globally.</p>
         </div>
 
@@ -307,70 +343,57 @@
             <!-- Key Metrics -->
             <div class="metrics-row">
                 <div class="metric-card">
-                    <div class="metric-value">4.7B</div>
+                    <div class="metric-value">4.7bn</div>
                     <div class="metric-label">Visa Cards in Circulation</div>
                 </div>
                 <div class="metric-card">
-                    <div class="metric-value">3.2B</div>
+                    <div class="metric-value">3.2bn</div>
                     <div class="metric-label">Mastercard Cards</div>
                 </div>
                 <div class="metric-card">
-                    <div class="metric-value">$6.58T</div>
+                    <div class="metric-value">$6.58tn</div>
                     <div class="metric-label">Visa Purchase Volume US</div>
                 </div>
                 <div class="metric-card">
-                    <div class="metric-value">4.3B</div>
-                    <div class="metric-label">Digital Wallet Users</div>
+                    <div class="metric-value">30%</div>
+                    <div class="metric-label">18-24 preferred payment method is mobile wallets</div>
                 </div>
                 <div class="metric-card">
-                    <div class="metric-value">$560B</div>
+                    <div class="metric-value">$560bn</div>
                     <div class="metric-label">BNPL Market Value 2025</div>
                 </div>
                 <div class="metric-card">
-                    <div class="metric-value">91%</div>
-                    <div class="metric-label">Digital Wallet Adoption (India)</div>
-                </div>
-                <div class="metric-card">
-                    <div class="metric-value">$314B</div>
+                    <div class="metric-value">$314bn</div>
                     <div class="metric-label">Stablecoin Market Cap</div>
                 </div>
                 <div class="metric-card">
-                    <div class="metric-value">3.5%</div>
+                    <div class="metric-value">1.3%-3.5%</div>
                     <div class="metric-label">Credit Card Service Fee Range</div>
                 </div>
             </div>
 
             <!-- Card Network Distribution -->
             <div class="chart-card">
-                <div class="chart-title">Payment Card Networks in Circulation</div>
-                <p style="font-size: 0.8rem; color: #9CA3AF; margin-bottom: 1rem;">CoinLaw & Industry Reports (2024-2025) - Global card distribution</p>
+                <div class="chart-title">Payment card networks in circulation</div>
+                <p style="font-size: 0.8rem; color: #9CA3AF; margin-bottom: 1rem;">CoinLaw & industry report 2025 - Global card distribution</p>
                 <div class="chart-container">
                     <canvas id="cardNetworkChart"></canvas>
                 </div>
             </div>
 
-            <!-- Digital Wallet Adoption -->
-            <div class="chart-card">
-                <div class="chart-title">Digital Wallet Adoption by Region</div>
-                <p style="font-size: 0.8rem; color: #9CA3AF; margin-bottom: 1rem;">ElectroniQ Digital Wallet Statistics (2024) - Regional adoption rates</p>
+            <!-- Payment Challenges by Severity -->
+            <div class="chart-card chart-card-wide">
+                <div class="chart-title">Payment challenges by severity level</div>
+                <p style="font-size: 0.8rem; color: #9CA3AF; margin-bottom: 1rem;">Payments Intelligence Merchant survey 2025 - Challenge severity assessment</p>
                 <div class="chart-container">
-                    <canvas id="walletAdoptionChart"></canvas>
-                </div>
-            </div>
-
-            <!-- BNPL Market Growth -->
-            <div class="chart-card">
-                <div class="chart-title">BNPL Market Growth Trajectory</div>
-                <p style="font-size: 0.8rem; color: #9CA3AF; margin-bottom: 1rem;">Research and Markets BNPL Report (2022-2029) - Market growth forecast</p>
-                <div class="chart-container">
-                    <canvas id="bnplGrowthChart"></canvas>
+                    <canvas id="paymentChallengesChart"></canvas>
                 </div>
             </div>
 
             <!-- Merchant Service Fees -->
             <div class="chart-card">
-                <div class="chart-title">Merchant Service Fee Comparison</div>
-                <p style="font-size: 0.8rem; color: #9CA3AF; margin-bottom: 1rem;">The Motley Fool Merchant Service Comparison (2025) - Fee analysis</p>
+                <div class="chart-title">Merchant service fee comparison</div>
+                <p style="font-size: 0.8rem; color: #9CA3AF; margin-bottom: 1rem;">The motley fool merchant service comparison (2025) - Fee analysis</p>
                 <div class="chart-container">
                     <canvas id="serviceFeesChart"></canvas>
                 </div>
@@ -422,8 +445,10 @@
         // 1. Card Network Distribution
         const cardNetworkCtx = document.getElementById('cardNetworkChart');
         if (cardNetworkCtx) {
+            const isMobileCardNetwork = window.innerWidth <= 768;
             new Chart(cardNetworkCtx, {
                 type: 'bar',
+                plugins: isMobileCardNetwork ? [ChartDataLabels] : [],
                 data: {
                     labels: ['Visa', 'Mastercard', 'UnionPay', 'American Express', 'Discover'],
                     datasets: [{
@@ -450,6 +475,19 @@
                             callbacks: {
                                 label: (context) => context.parsed.x.toFixed(2) + 'B cards'
                             }
+                        },
+                        datalabels: {
+                            display: isMobileCardNetwork,
+                            color: '#FFFFFF',
+                            font: {
+                                size: window.innerWidth <= 480 ? 8 : 10,
+                                weight: 'bold'
+                            },
+                            formatter: (value) => {
+                                return value >= 1 ? Math.round(value * 10) / 10 + 'B' : '';
+                            },
+                            anchor: 'end',
+                            align: 'right'
                         }
                     },
                     scales: {
@@ -472,27 +510,75 @@
             });
         }
 
-        // 2. Digital Wallet Adoption by Region
-        const walletAdoptionCtx = document.getElementById('walletAdoptionChart');
-        if (walletAdoptionCtx) {
-            new Chart(walletAdoptionCtx, {
+        // 2. Payment Challenges by Severity Level
+        const paymentChallengesCtx = document.getElementById('paymentChallengesChart');
+        if (paymentChallengesCtx) {
+            const isMobile = window.innerWidth <= 768;
+            new Chart(paymentChallengesCtx, {
                 type: 'bar',
+                plugins: isMobile ? [ChartDataLabels] : [],
                 data: {
-                    labels: ['India', 'Indonesia', 'Thailand', 'Hong Kong', 'Philippines', 'Malaysia', 'Singapore', 'China'],
-                    datasets: [{
-                        label: 'Adoption Rate (%)',
-                        data: [91, 90, 89, 88, 88, 87, 80, 84],
-                        backgroundColor: chartColors.greenVariants.slice(0, 8),
-                        borderRadius: 5,
-                        borderWidth: 0
-                    }]
+                    labels: [
+                        'High transaction fees',
+                        'Increasing risk of fraud',
+                        'Changing customer preferences',
+                        'Lack of payment data access',
+                        'Cart abandonment',
+                        'Limited alternative methods',
+                        'Settlement delays',
+                        'Compliance/regulatory',
+                        'Difficulty switching providers'
+                    ],
+                    datasets: [
+                        {
+                            label: 'Extremely Challenging',
+                            data: [25.6, 28.8, 14.4, 18.4, 20.8, 17.6, 20.8, 22.4, 14.4],
+                            backgroundColor: '#004F47',
+                            borderRadius: 0,
+                            borderWidth: 0
+                        },
+                        {
+                            label: 'Somewhat Challenging',
+                            data: [46.4, 33.6, 37.6, 36.0, 36.8, 35.2, 43.2, 44.0, 37.6],
+                            backgroundColor: '#006B5F',
+                            borderRadius: 0,
+                            borderWidth: 0
+                        },
+                        {
+                            label: 'Not Really Challenging',
+                            data: [18.4, 25.6, 28.8, 31.2, 28.8, 30.4, 25.6, 21.6, 31.2],
+                            backgroundColor: '#00A896',
+                            borderRadius: 0,
+                            borderWidth: 0
+                        },
+                        {
+                            label: 'Not At All Challenging',
+                            data: [8.0, 10.4, 17.6, 12.8, 11.2, 12.0, 6.4, 10.4, 13.6],
+                            backgroundColor: '#01D6B0',
+                            borderRadius: 0,
+                            borderWidth: 0
+                        }
+                    ]
                 },
                 options: {
                     indexAxis: 'y',
                     responsive: true,
                     maintainAspectRatio: false,
                     plugins: {
-                        legend: { display: false },
+                        legend: {
+                            display: true,
+                            position: 'bottom',
+                            labels: {
+                                color: '#E0E0E0',
+                                font: {
+                                    size: window.innerWidth <= 480 ? 8 : window.innerWidth <= 768 ? 9 : 10
+                                },
+                                padding: window.innerWidth <= 480 ? 6 : 10,
+                                usePointStyle: true,
+                                pointStyle: 'rect',
+                                boxWidth: window.innerWidth <= 480 ? 10 : 15
+                            }
+                        },
                         tooltip: {
                             backgroundColor: '#323D4D',
                             padding: 10,
@@ -501,93 +587,61 @@
                             borderColor: '#01D6B0',
                             borderWidth: 1,
                             callbacks: {
-                                label: (context) => context.parsed.x + '%'
+                                label: (context) => context.dataset.label + ': ' + context.parsed.x + '%'
                             }
+                        },
+                        datalabels: {
+                            display: isMobile,
+                            color: '#FFFFFF',
+                            font: {
+                                size: window.innerWidth <= 480 ? 8 : 10,
+                                weight: 'bold'
+                            },
+                            formatter: (value) => {
+                                return value >= 10 ? Math.round(value) + '%' : '';
+                            },
+                            anchor: 'center',
+                            align: 'center'
                         }
                     },
                     scales: {
                         x: {
+                            stacked: true,
                             beginAtZero: true,
                             max: 100,
                             grid: { color: '#3A4655' },
                             ticks: {
                                 color: '#E0E0E0',
-                                font: { size: 10 },
+                                font: {
+                                    size: window.innerWidth <= 480 ? 8 : window.innerWidth <= 768 ? 9 : 10
+                                },
                                 callback: (value) => value + '%'
                             }
                         },
                         y: {
+                            stacked: true,
                             grid: { display: false },
-                            ticks: { color: '#E0E0E0', font: { size: 9, weight: '500' } }
-                        }
-                    }
-                }
-            });
-        }
-
-        // 3. BNPL Market Growth
-        const bnplGrowthCtx = document.getElementById('bnplGrowthChart');
-        if (bnplGrowthCtx) {
-            new Chart(bnplGrowthCtx, {
-                type: 'line',
-                data: {
-                    labels: ['2022', '2024', '2025', '2026', '2029'],
-                    datasets: [{
-                        label: 'BNPL Market Value (Billion USD)',
-                        data: [130, 231.5, 560, 800, 1430],
-                        borderColor: chartColors.primary,
-                        backgroundColor: chartColors.primary + '15',
-                        borderWidth: 3,
-                        pointRadius: 5,
-                        pointBackgroundColor: chartColors.primary,
-                        pointBorderColor: '#28313E',
-                        pointBorderWidth: 2,
-                        tension: 0.4,
-                        fill: true
-                    }]
-                },
-                options: {
-                    responsive: true,
-                    maintainAspectRatio: false,
-                    plugins: {
-                        legend: { display: false },
-                        tooltip: {
-                            backgroundColor: '#323D4D',
-                            padding: 10,
-                            titleColor: '#FFFFFF',
-                            bodyColor: '#E0E0E0',
-                            borderColor: '#01D6B0',
-                            borderWidth: 1,
-                            callbacks: {
-                                label: (context) => '$' + context.parsed.y.toLocaleString() + 'B'
-                            }
-                        }
-                    },
-                    scales: {
-                        y: {
-                            beginAtZero: true,
-                            max: 1500,
-                            grid: { color: '#3A4655' },
                             ticks: {
                                 color: '#E0E0E0',
-                                font: { size: 10 },
-                                callback: (value) => '$' + (value / 100).toFixed(0) + '00B'
+                                font: {
+                                    size: window.innerWidth <= 480 ? 7 : window.innerWidth <= 768 ? 8 : 9,
+                                    weight: '500'
+                                },
+                                autoSkip: false
                             }
-                        },
-                        x: {
-                            grid: { display: false },
-                            ticks: { color: '#E0E0E0', font: { size: 10, weight: '500' } }
                         }
                     }
                 }
             });
         }
 
-        // 4. Merchant Service Fees Comparison
+        // 3. Merchant Service Fees Comparison
         const serviceFeesCtx = document.getElementById('serviceFeesChart');
         if (serviceFeesCtx) {
+            const isMobileServiceFees = window.innerWidth <= 768;
             new Chart(serviceFeesCtx, {
                 type: 'bar',
+                plugins: isMobileServiceFees ? [ChartDataLabels] : [],
                 data: {
                     labels: ['Credit Card', 'Debit Card', 'BNPL', 'Digital Wallet', 'Crypto/Stablecoin'],
                     datasets: [{
@@ -629,6 +683,19 @@
                                     return 'Range: ' + fees[context.dataIndex];
                                 }
                             }
+                        },
+                        datalabels: {
+                            display: isMobileServiceFees,
+                            color: '#FFFFFF',
+                            font: {
+                                size: window.innerWidth <= 480 ? 8 : 10,
+                                weight: 'bold'
+                            },
+                            formatter: (value) => {
+                                return value >= 1 ? Math.round(value * 10) / 10 + '%' : '';
+                            },
+                            anchor: 'end',
+                            align: 'right'
                         }
                     },
                     scales: {
