@@ -853,16 +853,17 @@
         <!-- Header -->
         <div class="header">
             <div style="position: relative; display: flex; justify-content: center; align-items: center; margin-bottom: 1rem;">
-                <p class="header-subtitle">Global Payment Reach & Growth 2025</p>
+                <p class="header-subtitle">Global payment reach & growth 2025</p>
                 <div style="position: absolute; right: 0; display: flex; align-items: center; gap: 0.75rem;">
                     <label for="view-toggle" style="font-size: 0.85rem; color: var(--text-secondary); font-weight: 600;">View:</label>
                     <select id="view-toggle" style="padding: 0.5rem 0.75rem; border-radius: 6px; background-color: var(--bg-tertiary); color: var(--text-primary); border: 1px solid var(--accent-primary); font-size: 0.85rem; font-weight: 600; cursor: pointer;">
-                        <option value="absolute">Absolute Transaction Values</option>
-                        <option value="percapita">Per Capita Analysis</option>
+                        <option value="absolute">Absolute transaction values</option>
+                        <option value="percapita">Per capita analysis</option>
                     </select>
                 </div>
             </div>
-            <p class="header-desc" id="header-desc">Interactive 3D globe visualisation of global payment transaction values across 144 countries. Explore worldwide payment market data with historical trends and top market analysis.</p>
+            <p class="header-desc" id="header-desc">Interactive 3D globe visualisation of global payment transaction values across 134 countries. Explore worldwide payment market data with historical trends and top market analysis.</p>
+            <p class="header-desc" id="header-desc">Switch between absolute transaction values and per capita analysis. Per capita data calculated from transaction values and UN population data. Global payment reach analysis.
         </div>
 
         <!-- Main Content -->
@@ -879,7 +880,7 @@
                             <div class="legend-bar"></div>
                             <div class="legend-values">
                                 <span class="legend-value-min" id="legend-min">$0</span>
-                                <span class="legend-value-max" id="legend-max">$7.81T</span>
+                                <span class="legend-value-max" id="legend-max">$7.81tn</span>
                             </div>
                         </div>
                         <span class="legend-label">High</span>
@@ -903,29 +904,29 @@
                 <div class="metric-pullout">
                     <div class="metric-pullout-rank">1st Rank</div>
                     <div class="metric-pullout-name">China</div>
-                    <div class="metric-pullout-value">$7.81T</div>
-                    <div class="metric-pullout-label">Transaction Value 2025</div>
+                    <div class="metric-pullout-value">$7.81tn</div>
+                    <div class="metric-pullout-label">Transaction value 2025</div>
                 </div>
 
                 <div class="metric-pullout">
                     <div class="metric-pullout-rank">2nd Rank</div>
                     <div class="metric-pullout-name">United States</div>
-                    <div class="metric-pullout-value">$3.47T</div>
-                    <div class="metric-pullout-label">Transaction Value 2025</div>
+                    <div class="metric-pullout-value">$3.47tn</div>
+                    <div class="metric-pullout-label">Transaction value 2025</div>
                 </div>
 
                 <div class="metric-pullout">
                     <div class="metric-pullout-rank">3rd Rank</div>
                     <div class="metric-pullout-name">India</div>
-                    <div class="metric-pullout-value">$1.35T</div>
-                    <div class="metric-pullout-label">Transaction Value 2025</div>
+                    <div class="metric-pullout-value">$1.35tn</div>
+                    <div class="metric-pullout-label">Transaction value 2025</div>
                 </div>
 
                 <div class="metric-pullout">
                     <div class="metric-pullout-rank">4th Rank</div>
                     <div class="metric-pullout-name">Japan</div>
-                    <div class="metric-pullout-value">$579B</div>
-                    <div class="metric-pullout-label">Transaction Value 2025</div>
+                    <div class="metric-pullout-value">$579bn</div>
+                    <div class="metric-pullout-label">Transaction value 2025</div>
                 </div>
             </div>
 
@@ -934,38 +935,34 @@
                 <div class="metric-pullout">
                     <div class="metric-pullout-rank">1st Rank</div>
                     <div class="metric-pullout-name">Iceland</div>
-                    <div class="metric-pullout-value">$14.18K</div>
-                    <div class="metric-pullout-label">Per Capita 2025</div>
+                    <div class="metric-pullout-value">$14.18k</div>
+                    <div class="metric-pullout-label">Per capita 2025</div>
                 </div>
 
                 <div class="metric-pullout">
                     <div class="metric-pullout-rank">2nd Rank</div>
                     <div class="metric-pullout-name">Luxembourg</div>
-                    <div class="metric-pullout-value">$11.68K</div>
-                    <div class="metric-pullout-label">Per Capita 2025</div>
+                    <div class="metric-pullout-value">$11.68k</div>
+                    <div class="metric-pullout-label">Per capita 2025</div>
                 </div>
 
                 <div class="metric-pullout">
                     <div class="metric-pullout-rank">3rd Rank</div>
                     <div class="metric-pullout-name">United States</div>
-                    <div class="metric-pullout-value">$10.26K</div>
-                    <div class="metric-pullout-label">Per Capita 2025</div>
+                    <div class="metric-pullout-value">$10.26k</div>
+                    <div class="metric-pullout-label">Per capita 2025</div>
                 </div>
 
                 <div class="metric-pullout">
                     <div class="metric-pullout-rank">4th Rank</div>
                     <div class="metric-pullout-name">Seychelles</div>
-                    <div class="metric-pullout-value">$9.40K</div>
-                    <div class="metric-pullout-label">Per Capita 2025</div>
+                    <div class="metric-pullout-value">$9.40k</div>
+                    <div class="metric-pullout-label">Per capita 2025</div>
                 </div>
             </div>
         </div>
 
-        <!-- Footer -->
-        <div class="footer">
-            <p>Switch between absolute transaction values and per capita analysis. Per capita data calculated from transaction values and UN population data. Global payment reach analysis.
-            </p>
-        </div>
+       
     </div>
 
 <script>
@@ -1423,12 +1420,12 @@
     // Format currency based on view
     function formatCurrency(value) {
         if (currentView === 'absolute') {
-            if (value >= 1000) return '$' + (value / 1000).toFixed(2) + 'T';
-            if (value >= 1) return '$' + value.toFixed(0) + 'B';
-            return '$' + value.toFixed(0) + 'M';
+            if (value >= 1000) return '$' + (value / 1000).toFixed(2) + 'tn';
+            if (value >= 1) return '$' + value.toFixed(0) + 'bn';
+            return '$' + value.toFixed(0) + 'm';
         } else {
-            if (value >= 10000) return '$' + (value / 1000).toFixed(1) + 'K';
-            if (value >= 1000) return '$' + (value / 1000).toFixed(2) + 'K';
+            if (value >= 10000) return '$' + (value / 1000).toFixed(1) + 'k';
+            if (value >= 1000) return '$' + (value / 1000).toFixed(2) + 'k';
             if (value >= 1) return '$' + value.toFixed(0);
             return '$' + value.toFixed(2);
         }
@@ -1624,7 +1621,7 @@
                 data: {
                     labels: years,
                     datasets: [{
-                        label: currentView === 'absolute' ? 'Transaction Value' : 'Per Capita Value',
+                        label: currentView === 'absolute' ? 'Transaction value' : 'Per capita value',
                         data: values,
                         backgroundColor: '#01D6B0',
                         borderColor: '#00B399',
@@ -1669,12 +1666,12 @@
                                 font: { size: 11 },
                                 callback: function(value) {
                                     if (currentView === 'absolute') {
-                                        if (value >= 1000) return '$' + (value / 1000).toFixed(1) + 'T';
-                                        if (value >= 1) return '$' + value.toFixed(0) + 'B';
-                                        return '$' + value.toFixed(0) + 'M';
+                                        if (value >= 1000) return '$' + (value / 1000).toFixed(1) + 'tn';
+                                        if (value >= 1) return '$' + value.toFixed(0) + 'bn';
+                                        return '$' + value.toFixed(0) + 'm';
                                     } else {
-                                        if (value >= 10000) return '$' + (value / 1000).toFixed(0) + 'K';
-                                        if (value >= 1000) return '$' + (value / 1000).toFixed(1) + 'K';
+                                        if (value >= 10000) return '$' + (value / 1000).toFixed(0) + 'k';
+                                        if (value >= 1000) return '$' + (value / 1000).toFixed(1) + 'k';
                                         return '$' + value.toFixed(0);
                                     }
                                 }
