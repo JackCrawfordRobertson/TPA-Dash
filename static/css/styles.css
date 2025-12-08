@@ -5,7 +5,7 @@
 }
 
 :root {
-    --bg-primary: #28313E;
+    --bg-primary: #323D4D;
     --bg-secondary: #323D4D;
     --bg-tertiary: #3A4655;
     --accent-primary: #01D6B0;
@@ -187,6 +187,30 @@ html, body {
     text-align: center;
     color: var(--text-tertiary);
     font-size: 0.875rem;
+}
+
+/* Ultrawide Monitor Constraints */
+@media (min-width: 2560px) {
+    body {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        min-height: 100vh;
+    }
+
+    .dashboard-container {
+        max-width: 1920px;
+        margin: 0 auto;
+        box-shadow: 0 0 40px rgba(0, 0, 0, 0.5);
+    }
+
+    .dashboard-grid {
+        max-width: 1920px;
+    }
+
+    .header-content {
+        max-width: 1920px;
+    }
 }
 
 /* Responsive Design */

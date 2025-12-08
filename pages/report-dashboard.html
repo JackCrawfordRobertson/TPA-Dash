@@ -14,7 +14,7 @@
         }
 
         :root {
-            --bg-primary: #28313E;
+            --bg-primary: #323D4D;
             --bg-secondary: #323D4D;
             --bg-card: #2F3A4A;
             --bg-hover: #3A4655;
@@ -134,7 +134,7 @@
         }
 
         .metric-card {
-            background-color: #28313E;
+            background-color: #323D4D;
             border: 1px solid var(--border-light);
             border-radius: 10px;
             padding: 1.25rem;
@@ -246,7 +246,7 @@
         .dashboard-footer {
             margin-top: 2rem;
             padding: 1rem 1.5rem;
-            background-color: #28313E;
+            background-color: #323D4D;
             border: 1px solid var(--border-light);
             border-radius: 10px;
             font-size: 0.8rem;
@@ -258,6 +258,26 @@
             font-weight: 600;
             color: var(--text-secondary);
             margin-bottom: 0.5rem;
+        }
+
+        /* Ultrawide Monitor Constraints */
+        @media (min-width: 2560px) {
+            body {
+                display: flex;
+                justify-content: center;
+                align-items: center;
+                min-height: 100vh;
+            }
+
+            .report-dashboard {
+                max-width: 1920px;
+                margin: 0 auto;
+                box-shadow: 0 0 40px rgba(0, 0, 0, 0.5);
+            }
+
+            .charts-container {
+                max-width: 1920px;
+            }
         }
 
         /* Responsive Design */
@@ -582,7 +602,7 @@
                     datasets: [{
                         data: [55, 20, 0, 4],
                         backgroundColor: [colors.primary, colors.light, '#F3F4F6', '#EF4444'],
-                        borderColor: '#28313E',
+                        borderColor: '#323D4D',
                         borderWidth: 2
                     }]
                 },
@@ -687,7 +707,7 @@
                             borderWidth: 3,
                             pointRadius: 5,
                             pointBackgroundColor: colors.primary,
-                            pointBorderColor: '#28313E',
+                            pointBorderColor: '#323D4D',
                             pointBorderWidth: 2,
                             tension: 0.4,
                             fill: false

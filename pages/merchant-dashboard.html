@@ -16,7 +16,7 @@
         }
 
         :root {
-            --bg-primary: #28313E;
+            --bg-primary: #323D4D;
             --bg-secondary: #323D4D;
             --bg-tertiary: #3A4655;
             --accent-primary: #01D6B0;
@@ -41,12 +41,12 @@
             flex-direction: column;
             height: 90vh;
             max-width: 100%;
-            background-color: #28313E;
+            background-color: #323D4D;
         }
 
         /* Header */
         .header {
-            background-color: #28313E;
+            background-color: #323D4D;
             padding: 1.5rem 2rem;
             border-bottom: 2px solid var(--accent-primary);
         }
@@ -93,7 +93,7 @@
         }
 
         .metric-card {
-            background-color: #28313E;
+            background-color: #323D4D;
             border: 1px solid var(--border-color);
             border-radius: 10px;
             padding: 1.25rem;
@@ -130,7 +130,7 @@
 
         /* Chart Cards */
         .chart-card {
-            background-color: #28313E;
+            background-color: #323D4D;
             border: 1px solid var(--border-color);
             border-radius: 10px;
             padding: 1.25rem;
@@ -160,7 +160,7 @@
 
         /* Footer */
         .footer {
-            background-color: #28313E;
+            background-color: #323D4D;
             border-top: 1px solid var(--border-color);
             padding: 1rem 2rem;
             font-size: 0.75rem;
@@ -189,6 +189,26 @@
         /* Wide Chart Spanning */
         .chart-card-wide {
             grid-column: span 2;
+        }
+
+        /* Ultrawide Monitor Constraints */
+        @media (min-width: 2560px) {
+            body {
+                display: flex;
+                justify-content: center;
+                align-items: center;
+                padding: 2rem 0;
+            }
+
+            .container {
+                max-width: 1920px;
+                margin: 0 auto;
+                box-shadow: 0 0 40px rgba(0, 0, 0, 0.5);
+            }
+
+            .content {
+                max-width: 1920px;
+            }
         }
 
         /* Responsive Design */
