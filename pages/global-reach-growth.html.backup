@@ -861,6 +861,7 @@
     <div class="container">
         <!-- Header -->
         <div class="header">
+            <h1 style="text-align: center; font-size: 2rem; margin-bottom: 1rem; color: var(--text-primary);">Global Digital Payments</h1>
             <p class="header-desc">Interactive 3D globe visualisation of global digital payment transaction values across 144 countries. Explore worldwide digital payments market data with historical trends from 2021-2025.</p>
             <p class="header-desc">Data shows total digital payment transaction values (billions USD) including cards, mobile payments, and online transactions. Excludes cash transactions.
         </div>
@@ -933,10 +934,12 @@
         </div>
 
         <!-- Footer with Source -->
-        <div class="footer">
-            <p>
-                Data source:
-                <a href="https://www.statista.com/outlook/fmo/payments/digital-payments/worldwide?currency=GBP#methodology" target="_blank" rel="noopener noreferrer" style="color: var(--accent-primary); text-decoration: none; border-bottom: 1px solid var(--accent-primary);">Statista - Digital Payments Market</a>
+        <div style="text-align: center; padding: 1.5rem; margin-top: 2rem; border-top: 1px solid var(--border-color); color: var(--text-secondary); font-size: 0.85rem;">
+            <p style="margin: 0;">
+                Data Source: <a href="https://www.statista.com/outlook/fmo/payments/digital-payments/worldwide?currency=GBP#methodology" target="_blank" rel="noopener noreferrer" style="color: var(--accent-primary); text-decoration: none; font-weight: 600;">Statista - Digital Payments Market</a>
+            </p>
+            <p style="margin: 0.5rem 0 0 0; font-size: 0.75rem; color: var(--text-tertiary);">
+                Includes cards, mobile payments, and online transactions. Excludes cash.
             </p>
         </div>
 
@@ -1092,10 +1095,9 @@
         "Uzbekistan": { "2021": 4.25, "2022": 6.14, "2023": 7.98, "2024": 9.68, "2025": 11.87 },
         "Vietnam": { "2021": 40.98, "2022": 56.22, "2023": 68.24, "2024": 79.79, "2025": 93.89 },
         "Zambia": { "2021": 1.36, "2022": 2.06, "2023": 2.45, "2024": 2.75, "2025": 3.34 },
-        "Zimbabwe": { "2021": 1.78, "2022": 2.23, "2023": 2.8, "2024": 3.19, "2025": 3.82 },
+        "Zimbabwe": { "2021": 1.78, "2022": 2.23, "2023": 2.8, "2024": 3.19, "2025": 3.82 }
     };
-    const globalReachGrowthData =
-{
+
     // Lazy Loading Setup: Only initialize map when it comes into view
         "Armenia": { "2021": 3.95, "2022": 5.74, "2023": 7.39, "2024": 8.47, "2025": 9.76 },
         "Australia": { "2021": 4.17, "2022": 5.32, "2023": 6.05, "2024": 6.72, "2025": 7.6 },
@@ -1391,7 +1393,7 @@
 
     // Get current payment data based on view
     function getPaymentData() {
-        return currentView === 'absolute' ? paymentData : globalReachGrowthData;
+        return currentView === 'absolute' ? paymentDataAbsolute : paymentDataPerCapita;
     }
 
     // Format currency/percentage based on view
@@ -1409,7 +1411,6 @@
     // Update header description based on view
     function updateHeaderDescription() {
         const descElement = document.getElementById('header-desc');
-        if (!descElement) return; // Element doesn't exist anymore
         if (currentView === 'absolute') {
             descElement.textContent = 'Interactive 3D globe visualisation of global payment transaction values across 144 countries. Explore worldwide payment market data with historical trends and top market analysis.';
         } else {
@@ -1448,9 +1449,9 @@
         updateHeaderDescription();
         updateLegendValues();
 
-        // Toggle sidebars - Disabled: only one sidebar now (showing absolute values)
-        // document.getElementById('sidebar-absolute').style.display = currentView === 'absolute' ? 'flex' : 'none';
-        // document.getElementById('sidebar-percapita').style.display = currentView === 'percapita' ? 'flex' : 'none';
+        // Toggle sidebars
+        document.getElementById('sidebar-absolute').style.display = currentView === 'absolute' ? 'flex' : 'none';
+        document.getElementById('sidebar-percapita').style.display = currentView === 'percapita' ? 'flex' : 'none';
 
         // Refresh map colors
         if (map.isSourceLoaded('countries')) {
@@ -1490,10 +1491,9 @@
     }
 
     // Handle view toggle dropdown
-    // Commented out - dropdown has been removed from UI
-    // document.getElementById('view-toggle').addEventListener('change', function(e) {
-    //     switchView(e.target.value);
-    // });
+    document.getElementById('view-toggle').addEventListener('change', function(e) {
+        switchView(e.target.value);
+    });
 
     // Detect if mobile device
     function isMobileDevice() {
