@@ -306,7 +306,7 @@
 
             .footer {
                 padding: 0.75rem 1rem;
-                font-size: 0.7rem;
+                font-size: 0.8rem;
             }
         }
 
@@ -346,6 +346,11 @@
 
             .chart-title {
                 font-size: 0.85rem;
+            }
+
+            /* Touch target optimization */
+            .metric-card {
+                min-height: 56px;
             }
         }
     </style>
@@ -730,7 +735,7 @@
                         },
                         y: {
                             grid: { display: false },
-                            ticks: { color: '#E0E0E0', font: { size: "12rem", weight: '500' } }
+                            ticks: { color: '#E0E0E0', font: { size: 12, weight: '500' } }
                         }
                     }
                 }
