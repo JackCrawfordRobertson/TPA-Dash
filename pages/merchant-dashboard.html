@@ -742,6 +742,355 @@
             });
         }
 
+        // Store chart instances for resize handling
+        let chartInstances = {
+            cardNetwork: null,
+            paymentChallenges: null,
+            serviceFees: null
+        };
+
+        // Initialize all charts
+        function initializeCharts() {
+            const isMobileCardNetwork = window.innerWidth <= 768;
+            const isMobile = window.innerWidth <= 768;
+            const isMobileServiceFees = window.innerWidth <= 768;
+
+            // Destroy existing charts if they exist
+            if (chartInstances.cardNetwork) chartInstances.cardNetwork.destroy();
+            if (chartInstances.paymentChallenges) chartInstances.paymentChallenges.destroy();
+            if (chartInstances.serviceFees) chartInstances.serviceFees.destroy();
+
+            // 1. Card Network Distribution
+            const cardNetworkCtx = document.getElementById('cardNetworkChart');
+            if (cardNetworkCtx) {
+                chartInstances.cardNetwork = new Chart(cardNetworkCtx, {
+                    type: 'bar',
+                    plugins: isMobileCardNetwork ? [ChartDataLabels] : [],
+                    data: {
+                        labels: ['Visa', 'Mastercard', 'UnionPay', 'American Express', 'Discover'],
+                        datasets: [{
+                            label: 'Cards in Circulation (Billions)',
+                            data: [4.7, 3.158, 9.6, 0.141, 0.0715],
+                            backgroundColor: chartColors.greenVariants.slice(0, 5),
+                            borderRadius: 5,
+                            borderWidth: 0
+                        }]
+                    },
+                    options: {
+                        indexAxis: 'y',
+                        responsive: true,
+                        maintainAspectRatio: false,
+                        plugins: {
+                            legend: { display: false },
+                            tooltip: {
+                                backgroundColor: '#323D4D',
+                                padding: 10,
+                                titleColor: '#FFFFFF',
+                                bodyColor: '#E0E0E0',
+                                borderColor: '#01D6B0',
+                                borderWidth: 1,
+                                callbacks: {
+                                    label: (context) => context.parsed.x.toFixed(2) + 'B cards'
+                                }
+                            },
+                            datalabels: {
+                                display: isMobileCardNetwork,
+                                color: '#FFFFFF',
+                                font: {
+                                    size: window.innerWidth <= 480 ? 8 : 10,
+                                    weight: 'bold'
+                                },
+                                formatter: (value) => {
+                                    return value >= 1 ? Math.round(value * 10) / 10 + 'B' : '';
+                                },
+                                anchor: 'end',
+                                align: 'right'
+                            }
+                        },
+                        scales: {
+                            x: {
+                                beginAtZero: true,
+                                max: 10,
+                                grid: { color: '#3A4655' },
+                                ticks: {
+                                    color: '#E0E0E0',
+                                    font: { size: 13 },
+                                    callback: (value) => value + 'B'
+                                }
+                            },
+                            y: {
+                                grid: { display: false },
+                                ticks: { color: '#E0E0E0', font: { size: 12, weight: '500' } }
+                            }
+                        }
+                    }
+                });
+            }
+
+            // 2. Payment Challenges by Severity Level
+            const paymentChallengesCtx = document.getElementById('paymentChallengesChart');
+            if (paymentChallengesCtx) {
+                chartInstances.paymentChallenges = new Chart(paymentChallengesCtx, {
+                    type: 'bar',
+                    plugins: isMobile ? [ChartDataLabels] : [],
+                    data: {
+                        labels: [
+                            'High transaction fees',
+                            'Increasing risk of fraud',
+                            'Changing customer preferences',
+                            'Lack of payment data access',
+                            'Cart abandonment',
+                            'Limited alternative methods',
+                            'Settlement delays',
+                            'Compliance/regulatory',
+                            'Difficulty switching providers'
+                        ],
+                        datasets: [
+                            {
+                                label: 'Extremely Challenging',
+                                data: [26.0, 29.3, 14.6, 18.7, 21.3, 18.5, 21.7, 22.8, 14.9],
+                                backgroundColor: '#004F47',
+                                borderRadius: 0,
+                                borderWidth: 0
+                            },
+                            {
+                                label: 'Somewhat Challenging',
+                                data: [47.2, 34.1, 38.2, 36.6, 37.7, 37.0, 45.0, 44.7, 38.8],
+                                backgroundColor: '#006B5F',
+                                borderRadius: 0,
+                                borderWidth: 0
+                            },
+                            {
+                                label: 'Not Really Challenging',
+                                data: [18.7, 26.0, 29.3, 31.7, 29.5, 31.9, 26.7, 22.0, 32.2],
+                                backgroundColor: '#00A896',
+                                borderRadius: 0,
+                                borderWidth: 0
+                            },
+                            {
+                                label: 'Not At All Challenging',
+                                data: [8.1, 10.6, 17.9, 13.0, 11.5, 12.6, 6.6, 10.5, 14.1],
+                                backgroundColor: '#01D6B0',
+                                borderRadius: 0,
+                                borderWidth: 0
+                            }
+                        ]
+                    },
+                    options: {
+                        indexAxis: 'y',
+                        responsive: true,
+                        maintainAspectRatio: false,
+                        plugins: {
+                            legend: {
+                                display: true,
+                                position: 'bottom',
+                                labels: {
+                                    color: '#E0E0E0',
+                                    font: {
+                                        size: window.innerWidth <= 480 ? 8 : window.innerWidth <= 768 ? 9 : 10
+                                    },
+                                    padding: window.innerWidth <= 480 ? 6 : 10,
+                                    usePointStyle: true,
+                                    pointStyle: 'rect',
+                                    boxWidth: window.innerWidth <= 480 ? 10 : 15
+                                }
+                            },
+                            tooltip: {
+                                backgroundColor: '#323D4D',
+                                padding: 10,
+                                titleColor: '#FFFFFF',
+                                bodyColor: '#E0E0E0',
+                                borderColor: '#01D6B0',
+                                borderWidth: 1,
+                                callbacks: {
+                                    label: (context) => context.dataset.label + ': ' + context.parsed.x + '%'
+                                }
+                            },
+                            datalabels: {
+                                display: isMobile,
+                                color: '#FFFFFF',
+                                font: {
+                                    size: window.innerWidth <= 480 ? 8 : 10,
+                                    weight: 'bold'
+                                },
+                                formatter: (value) => {
+                                    return value >= 10 ? Math.round(value) + '%' : '';
+                                },
+                                anchor: 'center',
+                                align: 'center'
+                            }
+                        },
+                        scales: {
+                            x: {
+                                stacked: true,
+                                beginAtZero: true,
+                                max: 100,
+                                grid: { color: '#3A4655' },
+                                ticks: {
+                                    color: '#E0E0E0',
+                                    font: {
+                                        size: window.innerWidth <= 480 ? 8 : window.innerWidth <= 768 ? 9 : 10
+                                    },
+                                    callback: (value) => value + '%'
+                                }
+                            },
+                            y: {
+                                stacked: true,
+                                grid: { display: false },
+                                ticks: {
+                                    color: '#E0E0E0',
+                                    font: {
+                                        size: window.innerWidth <= 480 ? 7 : window.innerWidth <= 768 ? 8 : 12,
+                                        weight: '500'
+                                    },
+                                    autoSkip: false
+                                }
+                            }
+                        }
+                    }
+                });
+            }
+
+            // 3. Merchant Service Fees Comparison
+            const serviceFeesCtx = document.getElementById('serviceFeesChart');
+            if (serviceFeesCtx) {
+                chartInstances.serviceFees = new Chart(serviceFeesCtx, {
+                    type: 'bar',
+                    plugins: isMobileServiceFees ? [ChartDataLabels] : [],
+                    data: {
+                        labels: ['Credit Card', 'Debit Card', 'BNPL', 'Digital Wallet', 'Crypto/Stablecoin'],
+                        datasets: [{
+                            label: 'Service Fee Range (%)',
+                            data: [2.5, 1.0, 4.25, 1.5, 0.5],
+                            backgroundColor: [
+                                chartColors.primary,
+                                chartColors.light,
+                                '#00B399',
+                                chartColors.secondary,
+                                chartColors.tertiary
+                            ],
+                            borderRadius: 5,
+                            borderWidth: 0
+                        }]
+                    },
+                    options: {
+                        indexAxis: 'y',
+                        responsive: true,
+                        maintainAspectRatio: false,
+                        plugins: {
+                            legend: { display: false },
+                            tooltip: {
+                                backgroundColor: '#323D4D',
+                                padding: 10,
+                                titleColor: '#FFFFFF',
+                                bodyColor: '#E0E0E0',
+                                borderColor: '#01D6B0',
+                                borderWidth: 1,
+                                callbacks: {
+                                    label: (context) => {
+                                        const fees = [
+                                            '1.5%-3.5%',
+                                            '0.5%-1.5%',
+                                            '1.5%-7.0%',
+                                            '1.0%-2.0%',
+                                            '0.01% + optional'
+                                        ];
+                                        return 'Range: ' + fees[context.dataIndex];
+                                    }
+                                }
+                            },
+                            datalabels: {
+                                display: isMobileServiceFees,
+                                color: '#FFFFFF',
+                                font: {
+                                    size: window.innerWidth <= 480 ? 8 : 10,
+                                    weight: 'bold'
+                                },
+                                formatter: (value) => {
+                                    return value >= 1 ? Math.round(value * 10) / 10 + '%' : '';
+                                },
+                                anchor: 'end',
+                                align: 'right'
+                            }
+                        },
+                        scales: {
+                            x: {
+                                beginAtZero: true,
+                                max: 5,
+                                grid: { color: '#3A4655' },
+                                ticks: {
+                                    color: '#E0E0E0',
+                                    font: { size: 13 },
+                                    callback: (value) => value + '%'
+                                }
+                            },
+                            y: {
+                                grid: { display: false },
+                                ticks: { color: '#E0E0E0', font: { size: 12, weight: '500' } }
+                            }
+                        }
+                    }
+                });
+            }
+        }
+
+        // Track current breakpoint
+        let currentBreakpoint = window.innerWidth <= 768 ? 'mobile' : 'desktop';
+
+        // Initialize charts on page load
+        initializeCharts();
+
+        // Handle window resize with debouncing
+        let resizeTimeout;
+        window.addEventListener('resize', function() {
+            clearTimeout(resizeTimeout);
+            resizeTimeout = setTimeout(function() {
+                const newBreakpoint = window.innerWidth <= 768 ? 'mobile' : 'desktop';
+
+                // Only rebuild charts if crossing the breakpoint
+                if (newBreakpoint !== currentBreakpoint) {
+                    currentBreakpoint = newBreakpoint;
+                    initializeCharts();
+                    console.log('Charts rebuilt for ' + currentBreakpoint + ' view');
+                }
+
+                // Send updated height to parent after resize
+                sendHeightToParent();
+            }, 250); // Debounce for 250ms
+        });
+
+        // Function to calculate and send height to parent iframe
+        function sendHeightToParent() {
+            // Get the actual height of the document
+            const body = document.body;
+            const html = document.documentElement;
+            const height = Math.max(
+                body.scrollHeight,
+                body.offsetHeight,
+                html.clientHeight,
+                html.scrollHeight,
+                html.offsetHeight
+            );
+
+            // Send message to parent window
+            if (window.parent !== window) {
+                window.parent.postMessage({
+                    type: 'dashboard-height',
+                    height: height,
+                    dashboard: 'merchant-dashboard'
+                }, '*');
+                console.log('Sent height to parent:', height + 'px');
+            }
+        }
+
+        // Send initial height after charts are loaded
+        setTimeout(sendHeightToParent, 500);
+
+        // Also send height when images or content loads
+        window.addEventListener('load', function() {
+            setTimeout(sendHeightToParent, 100);
+        });
+
         console.log('Merchant dashboard charts initialized');
     </script>
 </body>

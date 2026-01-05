@@ -1862,6 +1862,54 @@
 
         mapObserver.observe(mapContainer);
     }
+
+    // Handle window resize for map
+    let resizeTimeout;
+    window.addEventListener('resize', function() {
+        clearTimeout(resizeTimeout);
+        resizeTimeout = setTimeout(function() {
+            // Resize the map if it's initialized
+            if (map && mapInitialized) {
+                map.resize();
+                console.log('Map resized for viewport');
+            }
+
+            // Send updated height to parent after resize
+            sendHeightToParent();
+        }, 250); // Debounce for 250ms
+    });
+
+    // Function to calculate and send height to parent iframe
+    function sendHeightToParent() {
+        // Get the actual height of the document
+        const body = document.body;
+        const html = document.documentElement;
+        const height = Math.max(
+            body.scrollHeight,
+            body.offsetHeight,
+            html.clientHeight,
+            html.scrollHeight,
+            html.offsetHeight
+        );
+
+        // Send message to parent window
+        if (window.parent !== window) {
+            window.parent.postMessage({
+                type: 'dashboard-height',
+                height: height,
+                dashboard: 'global-reach-growth'
+            }, '*');
+            console.log('Sent height to parent:', height + 'px');
+        }
+    }
+
+    // Send initial height after map is loaded
+    setTimeout(sendHeightToParent, 500);
+
+    // Also send height when content loads
+    window.addEventListener('load', function() {
+        setTimeout(sendHeightToParent, 100);
+    });
 </script>
 
 </body>

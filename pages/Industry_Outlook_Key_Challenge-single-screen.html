@@ -817,6 +817,388 @@
           },
         });
       }
+
+      // Store chart instances for resize handling
+      let chartInstances = {
+        budget: null,
+        outlook: null,
+        ai: null,
+        challenges: null
+      };
+
+      // Initialize all charts
+      function initializeCharts() {
+        const isMobileBudget = window.innerWidth <= 768;
+        const isMobileAI = window.innerWidth <= 768;
+
+        // Destroy existing charts if they exist
+        if (chartInstances.budget) chartInstances.budget.destroy();
+        if (chartInstances.outlook) chartInstances.outlook.destroy();
+        if (chartInstances.ai) chartInstances.ai.destroy();
+        if (chartInstances.challenges) chartInstances.challenges.destroy();
+
+        // 1. Budget Priorities Chart
+        const budgetCtx = document.getElementById("budgetChart");
+        if (budgetCtx) {
+          chartInstances.budget = new Chart(budgetCtx, {
+            type: "bar",
+            plugins: isMobileBudget ? [ChartDataLabels] : [],
+            data: {
+              labels: [
+                "AI",
+                "Cross-border\npayments",
+                "Real-time\npayments",
+                "Customer experience",
+                "Embedded\ncommerce",
+                "Open banking",
+                "Other",
+                "Digital currencies",
+                "Digital wallets",
+                "Blockchain\ntechnology",
+                "Financial inclusion\n& ESG",
+              ],
+              datasets: [
+                {
+                  data: [18, 12, 12, 11, 10, 8, 8, 7, 6, 4, 4],
+                  backgroundColor: chartColors.greenVariants.slice(0, 11),
+                  borderRadius: 5,
+                  borderWidth: 0,
+                },
+              ],
+            },
+            options: {
+              indexAxis: "y",
+              responsive: true,
+              maintainAspectRatio: false,
+              plugins: {
+                legend: { display: false },
+                tooltip: {
+                  backgroundColor: "#323D4D",
+                  padding: 10,
+                  titleColor: "#FFFFFF",
+                  bodyColor: "#E0E0E0",
+                  borderColor: "#01D6B0",
+                  borderWidth: 1,
+                  callbacks: {
+                    label: (context) => Math.round(context.parsed.x) + "%",
+                  },
+                },
+                datalabels: {
+                  display: isMobileBudget,
+                  color: "#FFFFFF",
+                  font: {
+                    size: window.innerWidth <= 480 ? 8 : 10,
+                    weight: "bold",
+                  },
+                  formatter: (value) => {
+                    return value >= 4 ? Math.round(value) + "%" : "";
+                  },
+                  anchor: "end",
+                  align: "right",
+                },
+              },
+              scales: {
+                x: {
+                  beginAtZero: true,
+                  max: 20,
+                  grid: { color: "#3A4655" },
+                  ticks: {
+                    color: "#E0E0E0",
+                    font: { size: 12 },
+                    callback: (value) => value + "%",
+                  },
+                },
+                y: {
+                  grid: { display: false },
+                  ticks: { color: "#E0E0E0", font: { size: 12, weight: "500" } },
+                },
+              },
+            },
+          });
+        }
+
+        // 2. Industry Outlook Chart
+        const outlookCtx = document.getElementById("outlookChart");
+        if (outlookCtx) {
+          chartInstances.outlook = new Chart(outlookCtx, {
+            type: "doughnut",
+            plugins: [],
+            data: {
+              labels: ["Positive", "Very Positive", "Neutral", "Negative"],
+              datasets: [
+                {
+                  data: [55, 20, 20, 4],
+                  backgroundColor: [
+                    chartColors.primary,
+                    chartColors.light,
+                    chartColors.secondary,
+                    "#4A5668",
+                  ],
+                  borderColor: "#323D4D",
+                  borderWidth: 2,
+                },
+              ],
+            },
+            options: {
+              responsive: true,
+              maintainAspectRatio: false,
+              plugins: {
+                legend: {
+                  position: "bottom",
+                  labels: {
+                    padding: 12,
+                    font: { size: 10, weight: "500" },
+                    color: "#E0E0E0",
+                  },
+                },
+                tooltip: {
+                  backgroundColor: "#323D4D",
+                  padding: 10,
+                  titleColor: "#FFFFFF",
+                  bodyColor: "#E0E0E0",
+                  borderColor: "#01D6B0",
+                  borderWidth: 1,
+                  callbacks: {
+                    label: (context) =>
+                      context.label + ": " + context.parsed + "%",
+                  },
+                },
+              },
+            },
+          });
+        }
+
+        // 3. Biggest Opportunities Ahead Chart
+        const aiCtx = document.getElementById("aiChart");
+        if (aiCtx) {
+          chartInstances.ai = new Chart(aiCtx, {
+            type: "bar",
+            plugins: isMobileAI ? [ChartDataLabels] : [],
+            data: {
+              labels: [
+                "Other",
+                "AI",
+                "Digital currencies",
+                "Cross-border\npayments",
+                "Open Banking",
+                "Real-time\npayments",
+                "Embedded\ncommerce",
+                "Digital wallets",
+              ],
+              datasets: [
+                {
+                  data: [35, 24, 7, 5, 3, 3, 2, 2],
+                  backgroundColor: chartColors.greenVariants.slice(0, 8),
+                  borderRadius: 5,
+                  borderWidth: 0,
+                },
+              ],
+            },
+            options: {
+              indexAxis: "y",
+              responsive: true,
+              maintainAspectRatio: false,
+              plugins: {
+                legend: { display: false },
+                tooltip: {
+                  backgroundColor: "#323D4D",
+                  padding: 10,
+                  titleColor: "#FFFFFF",
+                  bodyColor: "#E0E0E0",
+                  borderColor: "#01D6B0",
+                  borderWidth: 1,
+                  callbacks: {
+                    label: (context) => Math.round(context.parsed.x) + "%",
+                  },
+                },
+                datalabels: {
+                  display: isMobileAI,
+                  color: "#FFFFFF",
+                  font: {
+                    size: window.innerWidth <= 480 ? 8 : 10,
+                    weight: "bold",
+                  },
+                  formatter: (value) => {
+                    return value >= 2 ? Math.round(value) + "%" : "";
+                  },
+                  anchor: "end",
+                  align: "right",
+                },
+              },
+              scales: {
+                x: {
+                  beginAtZero: true,
+                  max: 40,
+                  grid: { color: "#3A4655" },
+                  ticks: {
+                    color: "#E0E0E0",
+                    font: { size: 12 },
+                    callback: (value) => value + "%",
+                  },
+                },
+                y: {
+                  grid: { display: false },
+                  ticks: { color: "#E0E0E0", font: { size: 12, weight: "500" } },
+                },
+              },
+            },
+          });
+        }
+
+        // 4. Challenges Trend Chart
+        const challengesCtx = document.getElementById("challengesChart");
+        if (challengesCtx) {
+          chartInstances.challenges = new Chart(challengesCtx, {
+            type: "line",
+            plugins: [],
+            data: {
+              labels: ["2023", "2024", "2025"],
+              datasets: [
+                {
+                  label: "Financial Crime & Cybersecurity",
+                  data: [21, 28, 30],
+                  borderColor: chartColors.primary,
+                  backgroundColor: chartColors.primary + "10",
+                  borderWidth: 3,
+                  pointRadius: 4,
+                  pointBackgroundColor: chartColors.primary,
+                  pointBorderColor: "#323D4D",
+                  pointBorderWidth: 2,
+                  tension: 0.4,
+                  fill: false,
+                },
+                {
+                  label: "Compliance",
+                  data: [25, 18, 16],
+                  borderColor: chartColors.secondary,
+                  backgroundColor: chartColors.secondary + "10",
+                  borderWidth: 3,
+                  pointRadius: 4,
+                  pointBackgroundColor: chartColors.secondary,
+                  pointBorderColor: "#323D4D",
+                  pointBorderWidth: 2,
+                  tension: 0.4,
+                  fill: false,
+                },
+                {
+                  label: "Digital Transformation",
+                  data: [14, 10, 13],
+                  borderColor: chartColors.tertiary,
+                  backgroundColor: chartColors.tertiary + "10",
+                  borderWidth: 3,
+                  pointRadius: 4,
+                  pointBackgroundColor: chartColors.tertiary,
+                  pointBorderColor: "#323D4D",
+                  pointBorderWidth: 2,
+                  tension: 0.4,
+                  fill: false,
+                },
+              ],
+            },
+            options: {
+              responsive: true,
+              maintainAspectRatio: false,
+              plugins: {
+                legend: {
+                  position: "bottom",
+                  labels: {
+                    padding: 10,
+                    font: { size: 10, weight: "500" },
+                    color: "#E0E0E0",
+                  },
+                },
+                tooltip: {
+                  backgroundColor: "#323D4D",
+                  padding: 10,
+                  titleColor: "#FFFFFF",
+                  bodyColor: "#E0E0E0",
+                  borderColor: "#01D6B0",
+                  borderWidth: 1,
+                  callbacks: {
+                    label: (context) =>
+                      context.dataset.label + ": " + context.parsed.y + "%",
+                  },
+                },
+              },
+              scales: {
+                y: {
+                  beginAtZero: true,
+                  max: 35,
+                  grid: { color: "#3A4655" },
+                  ticks: {
+                    color: "#E0E0E0",
+                    font: { size: 13 },
+                    callback: (value) => value + "%",
+                  },
+                },
+                x: {
+                  grid: { display: false },
+                  ticks: { color: "#E0E0E0", font: { size: 12, weight: "500" } },
+                },
+              },
+            },
+          });
+        }
+      }
+
+      // Track current breakpoint
+      let currentBreakpoint = window.innerWidth <= 768 ? 'mobile' : 'desktop';
+
+      // Initialize charts on page load
+      initializeCharts();
+
+      // Handle window resize with debouncing
+      let resizeTimeout;
+      window.addEventListener('resize', function() {
+        clearTimeout(resizeTimeout);
+        resizeTimeout = setTimeout(function() {
+          const newBreakpoint = window.innerWidth <= 768 ? 'mobile' : 'desktop';
+
+          // Only rebuild charts if crossing the breakpoint
+          if (newBreakpoint !== currentBreakpoint) {
+            currentBreakpoint = newBreakpoint;
+            initializeCharts();
+            console.log('Charts rebuilt for ' + currentBreakpoint + ' view');
+          }
+
+          // Send updated height to parent after resize
+          sendHeightToParent();
+        }, 250); // Debounce for 250ms
+      });
+
+      // Function to calculate and send height to parent iframe
+      function sendHeightToParent() {
+        // Get the actual height of the document
+        const body = document.body;
+        const html = document.documentElement;
+        const height = Math.max(
+          body.scrollHeight,
+          body.offsetHeight,
+          html.clientHeight,
+          html.scrollHeight,
+          html.offsetHeight
+        );
+
+        // Send message to parent window
+        if (window.parent !== window) {
+          window.parent.postMessage({
+            type: 'dashboard-height',
+            height: height,
+            dashboard: 'industry-outlook'
+          }, '*');
+          console.log('Sent height to parent:', height + 'px');
+        }
+      }
+
+      // Send initial height after charts are loaded
+      setTimeout(sendHeightToParent, 500);
+
+      // Also send height when images or content loads
+      window.addEventListener('load', function() {
+        setTimeout(sendHeightToParent, 100);
+      });
+
+      console.log('Industry outlook dashboard charts initialized');
     </script>
   </body>
 </html>
