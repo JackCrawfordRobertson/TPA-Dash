@@ -1161,37 +1161,27 @@
         }
       }
 
-      // Track current breakpoint and zoom level
+      // Track current breakpoint for height updates
       let currentBreakpoint = window.innerWidth <= 768 ? 'mobile' : 'desktop';
-      let currentZoom = window.devicePixelRatio || 1;
 
       // Initialize charts on page load
       initializeCharts();
 
-      // Handle window resize with debouncing (detects both resize and zoom)
+      // Handle window resize with debouncing - ALWAYS rebuild for smooth resizing
       let resizeTimeout;
       window.addEventListener('resize', function() {
         clearTimeout(resizeTimeout);
         resizeTimeout = setTimeout(function() {
-          const newBreakpoint = window.innerWidth <= 768 ? 'mobile' : 'desktop';
-          const newZoom = window.devicePixelRatio || 1;
-          const zoomChanged = Math.abs(newZoom - currentZoom) > 0.01;
+          // Always rebuild charts on ANY resize/zoom for smooth, consistent rendering
+          initializeCharts();
+          console.log('Charts rebuilt - smooth resize');
 
-          // Rebuild charts if breakpoint changed OR zoom changed
+          // Only send height when breakpoint changes (prevents iframe loop)
+          const newBreakpoint = window.innerWidth <= 768 ? 'mobile' : 'desktop';
           if (newBreakpoint !== currentBreakpoint) {
             currentBreakpoint = newBreakpoint;
-            currentZoom = newZoom;
-            initializeCharts();
-            console.log('Charts rebuilt for ' + currentBreakpoint + ' view');
-
-            // Only send height when breakpoint changes
             setTimeout(sendHeightToParent, 100);
-          } else if (zoomChanged) {
-            currentZoom = newZoom;
-            initializeCharts();
-            console.log('Charts rebuilt for zoom level:', Math.round(newZoom * 100) + '%');
-
-            // Don't send height on zoom - prevents loop with iframe
+            console.log('Breakpoint changed to:', currentBreakpoint);
           }
         }, 250); // Debounce for 250ms
       });
