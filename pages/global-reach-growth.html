@@ -1878,44 +1878,11 @@
         }, 250); // Debounce for 250ms
     });
 
-    // Function to calculate and send height to parent iframe
-    let lastSentHeight = 0; // Track last sent height to prevent infinite loops
+    // DISABLED: Dynamic height communication removed for map dashboard to prevent infinite loop
+    // The map's resize behavior conflicts with iframe height changes
+    // Use a fixed height for this dashboard's iframe instead
 
-    function sendHeightToParent() {
-        // Get the actual height of the document
-        const body = document.body;
-        const html = document.documentElement;
-        const height = Math.max(
-            body.scrollHeight,
-            body.offsetHeight,
-            html.clientHeight,
-            html.scrollHeight,
-            html.offsetHeight
-        );
-
-        // Only send if height changed by more than 10px (prevents infinite loop)
-        if (Math.abs(height - lastSentHeight) > 10) {
-            lastSentHeight = height;
-
-            // Send message to parent window
-            if (window.parent !== window) {
-                window.parent.postMessage({
-                    type: 'dashboard-height',
-                    height: height,
-                    dashboard: 'global-reach-growth'
-                }, '*');
-                console.log('Sent height to parent:', height + 'px');
-            }
-        }
-    }
-
-    // Send initial height after map is loaded
-    setTimeout(sendHeightToParent, 500);
-
-    // Also send height when content loads
-    window.addEventListener('load', function() {
-        setTimeout(sendHeightToParent, 100);
-    });
+    console.log('Map dashboard loaded - using fixed iframe height');
 </script>
 
 </body>

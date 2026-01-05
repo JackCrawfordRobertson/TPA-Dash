@@ -755,10 +755,30 @@
             const isMobile = window.innerWidth <= 768;
             const isMobileServiceFees = window.innerWidth <= 768;
 
-            // Destroy existing charts if they exist
-            if (chartInstances.cardNetwork) chartInstances.cardNetwork.destroy();
-            if (chartInstances.paymentChallenges) chartInstances.paymentChallenges.destroy();
-            if (chartInstances.serviceFees) chartInstances.serviceFees.destroy();
+            // Destroy existing charts if they exist (prevents "Canvas already in use" error)
+            if (chartInstances.cardNetwork) {
+                chartInstances.cardNetwork.destroy();
+                chartInstances.cardNetwork = null;
+            }
+            if (chartInstances.paymentChallenges) {
+                chartInstances.paymentChallenges.destroy();
+                chartInstances.paymentChallenges = null;
+            }
+            if (chartInstances.serviceFees) {
+                chartInstances.serviceFees.destroy();
+                chartInstances.serviceFees = null;
+            }
+
+            // Also check if Chart.js has any charts on these canvases and destroy them
+            ['cardNetworkChart', 'paymentChallengesChart', 'serviceFeesChart'].forEach(function(canvasId) {
+                const canvas = document.getElementById(canvasId);
+                if (canvas) {
+                    const existingChart = Chart.getChart(canvas);
+                    if (existingChart) {
+                        existingChart.destroy();
+                    }
+                }
+            });
 
             // 1. Card Network Distribution
             const cardNetworkCtx = document.getElementById('cardNetworkChart');
@@ -1092,11 +1112,12 @@
         }
 
         // Send initial height after charts are loaded
-        setTimeout(sendHeightToParent, 500);
+        // Longer delay to ensure parent listener is ready
+        setTimeout(sendHeightToParent, 1500);
 
         // Also send height when images or content loads
         window.addEventListener('load', function() {
-            setTimeout(sendHeightToParent, 100);
+            setTimeout(sendHeightToParent, 1000);
         });
 
         console.log('Merchant dashboard charts initialized');

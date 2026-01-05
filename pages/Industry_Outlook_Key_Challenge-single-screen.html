@@ -831,11 +831,34 @@
         const isMobileBudget = window.innerWidth <= 768;
         const isMobileAI = window.innerWidth <= 768;
 
-        // Destroy existing charts if they exist
-        if (chartInstances.budget) chartInstances.budget.destroy();
-        if (chartInstances.outlook) chartInstances.outlook.destroy();
-        if (chartInstances.ai) chartInstances.ai.destroy();
-        if (chartInstances.challenges) chartInstances.challenges.destroy();
+        // Destroy existing charts if they exist (prevents "Canvas already in use" error)
+        if (chartInstances.budget) {
+          chartInstances.budget.destroy();
+          chartInstances.budget = null;
+        }
+        if (chartInstances.outlook) {
+          chartInstances.outlook.destroy();
+          chartInstances.outlook = null;
+        }
+        if (chartInstances.ai) {
+          chartInstances.ai.destroy();
+          chartInstances.ai = null;
+        }
+        if (chartInstances.challenges) {
+          chartInstances.challenges.destroy();
+          chartInstances.challenges = null;
+        }
+
+        // Also check if Chart.js has any charts on these canvases and destroy them
+        ['budgetChart', 'outlookChart', 'aiChart', 'challengesChart'].forEach(function(canvasId) {
+          const canvas = document.getElementById(canvasId);
+          if (canvas) {
+            const existingChart = Chart.getChart(canvas);
+            if (existingChart) {
+              existingChart.destroy();
+            }
+          }
+        });
 
         // 1. Budget Priorities Chart
         const budgetCtx = document.getElementById("budgetChart");
@@ -1199,11 +1222,12 @@
       }
 
       // Send initial height after charts are loaded
-      setTimeout(sendHeightToParent, 500);
+      // Longer delay to ensure parent listener is ready
+      setTimeout(sendHeightToParent, 1500);
 
       // Also send height when images or content loads
       window.addEventListener('load', function() {
-        setTimeout(sendHeightToParent, 100);
+        setTimeout(sendHeightToParent, 1000);
       });
 
       console.log('Industry outlook dashboard charts initialized');
