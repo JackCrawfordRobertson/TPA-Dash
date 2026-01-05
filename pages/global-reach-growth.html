@@ -1880,6 +1880,8 @@
     });
 
     // Function to calculate and send height to parent iframe
+    let lastSentHeight = 0; // Track last sent height to prevent infinite loops
+
     function sendHeightToParent() {
         // Get the actual height of the document
         const body = document.body;
@@ -1892,14 +1894,19 @@
             html.offsetHeight
         );
 
-        // Send message to parent window
-        if (window.parent !== window) {
-            window.parent.postMessage({
-                type: 'dashboard-height',
-                height: height,
-                dashboard: 'global-reach-growth'
-            }, '*');
-            console.log('Sent height to parent:', height + 'px');
+        // Only send if height changed by more than 10px (prevents infinite loop)
+        if (Math.abs(height - lastSentHeight) > 10) {
+            lastSentHeight = height;
+
+            // Send message to parent window
+            if (window.parent !== window) {
+                window.parent.postMessage({
+                    type: 'dashboard-height',
+                    height: height,
+                    dashboard: 'global-reach-growth'
+                }, '*');
+                console.log('Sent height to parent:', height + 'px');
+            }
         }
     }
 
