@@ -46,7 +46,9 @@
         height: auto;
         min-height: 100vh;
         max-width: 100%;
+        width: 100%;
         background-color: #323d4d;
+        box-sizing: border-box;
       }
 
       /* Header */
@@ -81,11 +83,14 @@
       .content {
         flex: 1;
         overflow-y: visible;
+        overflow-x: hidden;
         padding: 1.5rem 2rem;
         display: grid;
         grid-template-columns: 1fr 1fr 1fr 1fr;
         grid-template-rows: auto auto;
         gap: 1.5rem;
+        width: 100%;
+        box-sizing: border-box;
       }
 
       /* Metrics Row */
@@ -104,6 +109,8 @@
         padding: 1.25rem;
         text-align: center;
         transition: all 0.3s ease;
+        min-width: 0;
+        box-sizing: border-box;
       }
 
       .metric-card:hover {
@@ -135,6 +142,8 @@
         padding: 1.25rem;
         display: flex;
         flex-direction: column;
+        min-width: 0;
+        box-sizing: border-box;
       }
 
       .chart-card:hover {
@@ -198,7 +207,7 @@
       }
 
       /* Responsive Design */
-      @media (max-width: 1400px) {
+      @media (max-width: 1600px) {
         .content {
           grid-template-columns: 1fr 1fr;
           grid-template-rows: auto auto auto;
