@@ -39,9 +39,12 @@
         .container {
             display: flex;
             flex-direction: column;
-            height: 90vh;
+            height: auto;
+            min-height: 100vh;
             max-width: 100%;
             background-color: #323D4D;
+            width: 100%;
+            box-sizing: border-box;
         }
 
         /* Header */
@@ -75,12 +78,15 @@
         /* Main Content */
         .content {
             flex: 1;
-            overflow-y: auto;
+            overflow-y: visible;
+            overflow-x: hidden;
             padding: 1.5rem 2rem;
             display: grid;
             grid-template-columns: 1fr 1fr 1fr 1fr;
             grid-template-rows: auto auto;
             gap: 1.5rem;
+            width: 100%;
+            box-sizing: border-box;
         }
 
         /* Metrics Row */
@@ -136,6 +142,9 @@
             padding: 1.25rem;
             display: flex;
             flex-direction: column;
+            min-width: 0;
+            box-sizing: border-box;
+            width: 100%;
         }
 
         .chart-card:hover {
@@ -189,6 +198,9 @@
         /* Wide Chart Spanning */
         .chart-card-wide {
             grid-column: span 2;
+            min-width: 0;
+            box-sizing: border-box;
+            width: 100%;
         }
 
         /* Ultrawide Monitor Constraints */
@@ -202,7 +214,7 @@
             }
 
             .content {
-                grid-template-columns: repeat(5, 1fr);
+                grid-template-columns: repeat(4, 1fr);
                 gap: 2rem;
                 padding: 2rem 3rem;
             }
@@ -213,7 +225,7 @@
             }
 
             .chart-card-wide {
-                grid-column: span 3;
+                grid-column: span 2;
             }
 
             .header {
@@ -246,7 +258,7 @@
         /* Medium Desktop: 1400px - 1599px */
         @media (min-width: 1400px) and (max-width: 1599px) {
             .content {
-                grid-template-columns: repeat(3, 1fr);
+                grid-template-columns: repeat(2, 1fr);
                 gap: 1.5rem;
                 padding: 1.5rem 2rem;
             }
@@ -264,7 +276,7 @@
         /* Small Desktop: 1200px - 1399px */
         @media (min-width: 1200px) and (max-width: 1399px) {
             .content {
-                grid-template-columns: repeat(3, 1fr);
+                grid-template-columns: repeat(2, 1fr);
                 gap: 1.25rem;
                 padding: 1.5rem 1.75rem;
             }
@@ -277,6 +289,11 @@
             /* Center the orphaned 7th metric card */
             .metrics-row .metric-card:nth-child(7) {
                 grid-column: 2 / 3;
+            }
+
+            /* All charts span full width */
+            .chart-card {
+                grid-column: span 2;
             }
 
             .chart-card-wide {
@@ -312,8 +329,13 @@
                 margin: 0 auto;
             }
 
+            /* All charts span full width */
+            .chart-card {
+                grid-column: span 2;
+            }
+
             .chart-card-wide {
-                grid-column: span 1;
+                grid-column: span 2;
             }
 
             .header {
@@ -352,8 +374,13 @@
                 margin: 0 auto;
             }
 
+            /* All charts span full width */
+            .chart-card {
+                grid-column: span 2;
+            }
+
             .chart-card-wide {
-                grid-column: span 1;
+                grid-column: span 2;
             }
 
             .header {
