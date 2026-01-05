@@ -1095,8 +1095,8 @@
                 html.offsetHeight
             );
 
-            // Only send if height changed by more than 10px (prevents infinite loop)
-            if (Math.abs(height - lastSentHeight) > 10) {
+            // Only send if height changed by more than 50px (prevents mini-loops from padding)
+            if (Math.abs(height - lastSentHeight) > 50) {
                 lastSentHeight = height;
 
                 // Send message to parent window
