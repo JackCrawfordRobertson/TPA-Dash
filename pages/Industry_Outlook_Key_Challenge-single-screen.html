@@ -43,7 +43,8 @@
       .container {
         display: flex;
         flex-direction: column;
-        height: 90vh;
+        height: auto;
+        min-height: 100vh;
         max-width: 100%;
         background-color: #323d4d;
       }
@@ -79,7 +80,7 @@
       /* Main Content */
       .content {
         flex: 1;
-        overflow-y: auto;
+        overflow-y: visible;
         padding: 1.5rem 2rem;
         display: grid;
         grid-template-columns: 1fr 1fr 1fr 1fr;
@@ -186,13 +187,6 @@
 
       /* Ultrawide Monitor Constraints */
       @media (min-width: 2560px) {
-        body {
-          display: flex;
-          justify-content: center;
-          align-items: center;
-          padding: 2rem 0;
-        }
-
         .container {
           max-width: 1920px;
           margin: 0 auto;
@@ -232,15 +226,9 @@
       }
 
       @media (max-width: 768px) {
-        .container {
-          height: auto;
-          min-height: 100vh;
-        }
-
         .content {
           grid-template-columns: 1fr;
           gap: 1rem;
-          overflow-y: visible;
           padding: 1rem;
         }
 
