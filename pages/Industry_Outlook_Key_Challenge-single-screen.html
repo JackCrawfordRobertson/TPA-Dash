@@ -1159,10 +1159,11 @@
             currentBreakpoint = newBreakpoint;
             initializeCharts();
             console.log('Charts rebuilt for ' + currentBreakpoint + ' view');
-          }
 
-          // Send updated height to parent after resize
-          sendHeightToParent();
+            // Only send height when breakpoint actually changes (and charts rebuild)
+            setTimeout(sendHeightToParent, 100);
+          }
+          // Don't send height on regular resize - prevents infinite loop
         }, 250); // Debounce for 250ms
       });
 

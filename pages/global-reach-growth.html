@@ -1873,9 +1873,8 @@
                 map.resize();
                 console.log('Map resized for viewport');
             }
-
-            // Send updated height to parent after resize
-            sendHeightToParent();
+            // Don't send height on regular resize - prevents infinite loop
+            // Height is only sent on initial load
         }, 250); // Debounce for 250ms
     });
 
