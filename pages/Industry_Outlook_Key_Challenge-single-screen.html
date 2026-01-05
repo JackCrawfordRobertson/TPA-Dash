@@ -532,7 +532,9 @@
           </div>
           <div class="metric-card">
             <div class="metric-value">53%</div>
-            <div class="metric-label">See AI/ML as greatest investment priority</div>
+            <div class="metric-label">
+              See AI/ML as greatest investment priority
+            </div>
           </div>
           <div class="metric-card">
             <div class="metric-value">18%</div>
@@ -591,7 +593,8 @@
         <div class="chart-card">
           <div class="chart-title">Biggest opportunities ahead</div>
           <p style="font-size: 0.8rem; color: #9ca3af; margin-bottom: 1rem">
-            Financial crime 360 survey • Payments intelligence - Future opportunity assessment
+            Financial crime 360 survey • Payments intelligence - Future
+            opportunity assessment
           </p>
           <div class="chart-container">
             <canvas id="aiChart"></canvas>
@@ -630,9 +633,9 @@
             href="https://thepaymentsassociation.org/article/financial-crime-360-state-of-the-industry-report-2025/"
             target="_blank"
             style="
-              color: #01d6b0;
+              color: #00bfa5;
               text-decoration: none;
-              border-bottom: 1px solid #01d6b0;
+              border-bottom: 1px solid #00bfa5;
             "
             >Financial Crime 360</a
           >
@@ -641,9 +644,9 @@
             href="https://www.isc2.org/Insights/2024/10/ISC2-2024-Cybersecurity-Workforce-Study"
             target="_blank"
             style="
-              color: #01d6b0;
+              color: #26e0c7;
               text-decoration: none;
-              border-bottom: 1px solid #01d6b0;
+              border-bottom: 1px solid #26e0c7;
             "
             >ISC2 Cybersecurity Study</a
           >
@@ -652,9 +655,9 @@
             href="https://www.mckinsey.com/industries/financial-services/our-insights/global-payments-report"
             target="_blank"
             style="
-              color: #01d6b0;
+              color: #008f7a;
               text-decoration: none;
-              border-bottom: 1px solid #01d6b0;
+              border-bottom: 1px solid #008f7a;
             "
             >McKinsey Global Payments</a
           >
@@ -1011,7 +1014,7 @@
         budget: null,
         outlook: null,
         ai: null,
-        challenges: null
+        challenges: null,
       };
 
       // Initialize all charts
@@ -1038,15 +1041,17 @@
         }
 
         // Also check if Chart.js has any charts on these canvases and destroy them
-        ['budgetChart', 'outlookChart', 'aiChart', 'challengesChart'].forEach(function(canvasId) {
-          const canvas = document.getElementById(canvasId);
-          if (canvas) {
-            const existingChart = Chart.getChart(canvas);
-            if (existingChart) {
-              existingChart.destroy();
+        ["budgetChart", "outlookChart", "aiChart", "challengesChart"].forEach(
+          function (canvasId) {
+            const canvas = document.getElementById(canvasId);
+            if (canvas) {
+              const existingChart = Chart.getChart(canvas);
+              if (existingChart) {
+                existingChart.destroy();
+              }
             }
           }
-        });
+        );
 
         // 1. Budget Priorities Chart
         const budgetCtx = document.getElementById("budgetChart");
@@ -1121,7 +1126,10 @@
                 },
                 y: {
                   grid: { display: false },
-                  ticks: { color: "#E0E0E0", font: { size: 12, weight: "500" } },
+                  ticks: {
+                    color: "#E0E0E0",
+                    font: { size: 12, weight: "500" },
+                  },
                 },
               },
             },
@@ -1249,7 +1257,10 @@
                 },
                 y: {
                   grid: { display: false },
-                  ticks: { color: "#E0E0E0", font: { size: 12, weight: "500" } },
+                  ticks: {
+                    color: "#E0E0E0",
+                    font: { size: 12, weight: "500" },
+                  },
                 },
               },
             },
@@ -1344,7 +1355,10 @@
                 },
                 x: {
                   grid: { display: false },
-                  ticks: { color: "#E0E0E0", font: { size: 12, weight: "500" } },
+                  ticks: {
+                    color: "#E0E0E0",
+                    font: { size: 12, weight: "500" },
+                  },
                 },
               },
             },
@@ -1353,26 +1367,26 @@
       }
 
       // Track current breakpoint for height updates
-      let currentBreakpoint = window.innerWidth <= 768 ? 'mobile' : 'desktop';
+      let currentBreakpoint = window.innerWidth <= 768 ? "mobile" : "desktop";
 
       // Initialize charts on page load
       initializeCharts();
 
       // Handle window resize with debouncing - ALWAYS rebuild for smooth resizing
       let resizeTimeout;
-      window.addEventListener('resize', function() {
+      window.addEventListener("resize", function () {
         clearTimeout(resizeTimeout);
-        resizeTimeout = setTimeout(function() {
+        resizeTimeout = setTimeout(function () {
           // Always rebuild charts on ANY resize/zoom for smooth, consistent rendering
           initializeCharts();
-          console.log('Charts rebuilt - smooth resize');
+          console.log("Charts rebuilt - smooth resize");
 
           // Only send height when breakpoint changes (prevents iframe loop)
-          const newBreakpoint = window.innerWidth <= 768 ? 'mobile' : 'desktop';
+          const newBreakpoint = window.innerWidth <= 768 ? "mobile" : "desktop";
           if (newBreakpoint !== currentBreakpoint) {
             currentBreakpoint = newBreakpoint;
             setTimeout(sendHeightToParent, 100);
-            console.log('Breakpoint changed to:', currentBreakpoint);
+            console.log("Breakpoint changed to:", currentBreakpoint);
           }
         }, 250); // Debounce for 250ms
       });
@@ -1398,12 +1412,15 @@
 
           // Send message to parent window
           if (window.parent !== window) {
-            window.parent.postMessage({
-              type: 'dashboard-height',
-              height: height,
-              dashboard: 'industry-outlook'
-            }, '*');
-            console.log('Sent height to parent:', height + 'px');
+            window.parent.postMessage(
+              {
+                type: "dashboard-height",
+                height: height,
+                dashboard: "industry-outlook",
+              },
+              "*"
+            );
+            console.log("Sent height to parent:", height + "px");
           }
         }
       }
@@ -1413,11 +1430,11 @@
       setTimeout(sendHeightToParent, 1500);
 
       // Also send height when images or content loads
-      window.addEventListener('load', function() {
+      window.addEventListener("load", function () {
         setTimeout(sendHeightToParent, 1000);
       });
 
-      console.log('Industry outlook dashboard charts initialized');
+      console.log("Industry outlook dashboard charts initialized");
     </script>
   </body>
 </html>
