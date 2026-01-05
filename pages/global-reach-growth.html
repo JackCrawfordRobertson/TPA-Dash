@@ -1863,18 +1863,27 @@
         mapObserver.observe(mapContainer);
     }
 
-    // Handle window resize for map
+    // Handle window resize for map (including zoom detection)
     let resizeTimeout;
+    let currentZoom = window.devicePixelRatio || 1;
+
     window.addEventListener('resize', function() {
         clearTimeout(resizeTimeout);
         resizeTimeout = setTimeout(function() {
+            const newZoom = window.devicePixelRatio || 1;
+            const zoomChanged = Math.abs(newZoom - currentZoom) > 0.01;
+
             // Resize the map if it's initialized
             if (map && mapInitialized) {
                 map.resize();
-                console.log('Map resized for viewport');
+                if (zoomChanged) {
+                    currentZoom = newZoom;
+                    console.log('Map resized for zoom level:', Math.round(newZoom * 100) + '%');
+                } else {
+                    console.log('Map resized for viewport');
+                }
             }
-            // Don't send height on regular resize - prevents infinite loop
-            // Height is only sent on initial load
+            // Don't send height on resize/zoom - map uses fixed iframe height
         }, 250); // Debounce for 250ms
     });
 
