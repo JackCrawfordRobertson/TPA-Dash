@@ -100,6 +100,8 @@
         grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
         gap: 1rem;
         margin-bottom: 0.5rem;
+        overflow-x: hidden;
+        width: 100%;
       }
 
       .metric-card {
@@ -206,7 +208,7 @@
         }
 
         .metrics-row {
-          grid-template-columns: repeat(7, 1fr);
+          grid-template-columns: repeat(7, minmax(0, 1fr));
           gap: 1rem;
         }
       }
@@ -471,7 +473,7 @@
             <div class="metric-label">roles to be filled in cybersecurity</div>
           </div>
           <div class="metric-card">
-            <div class="metric-value">$3T</div>
+            <div class="metric-value">$3tn</div>
             <div class="metric-label">
               Global payments projected 2030 revenue
             </div>

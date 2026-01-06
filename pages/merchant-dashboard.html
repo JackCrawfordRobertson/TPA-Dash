@@ -96,6 +96,8 @@
             grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
             gap: 1rem;
             margin-bottom: 0.5rem;
+            overflow-x: hidden;
+            width: 100%;
         }
 
         .metric-card {
@@ -110,6 +112,8 @@
             justify-content: center;
             align-items: center;
             min-height: 100px;
+            min-width: 0;
+            box-sizing: border-box;
         }
 
         .metric-card:hover {
@@ -215,7 +219,7 @@
             }
 
             .metrics-row {
-                grid-template-columns: repeat(7, 1fr);
+                grid-template-columns: repeat(7, minmax(0, 1fr));
                 gap: 1rem;
             }
 
