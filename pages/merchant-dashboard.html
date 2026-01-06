@@ -206,8 +206,8 @@
         /* Ultrawide Monitor Constraints */
         /* Responsive Design - Optimized Breakpoints */
 
-        /* Desktop: 1400px+ - Keep 4 columns and 7 metrics in one row */
-        @media (min-width: 1400px) {
+        /* Desktop: 1024px+ - Keep 4 columns and 7 metrics in one row */
+        @media (min-width: 1024px) {
             .content {
                 grid-template-columns: repeat(4, 1fr);
                 gap: 1.5rem;
@@ -242,80 +242,6 @@
 
             .header {
                 padding: 1.5rem 3rem;
-            }
-        }
-
-        /* Small Desktop: 1200px - 1399px - Drop to 2 columns, stack charts vertically */
-        @media (min-width: 1200px) and (max-width: 1399px) {
-            .content {
-                grid-template-columns: repeat(2, 1fr);
-                gap: 1.25rem;
-                padding: 1.5rem 1.75rem;
-            }
-
-            .metrics-row {
-                grid-template-columns: repeat(3, 1fr);
-                gap: 1rem;
-            }
-
-            /* Center the orphaned 7th metric card */
-            .metrics-row .metric-card:nth-child(7) {
-                grid-column: 2 / 3;
-            }
-
-            /* All charts span full width */
-            .chart-card {
-                grid-column: span 2;
-            }
-
-            .chart-card-wide {
-                grid-column: span 2;
-            }
-
-            .header {
-                padding: 1.25rem 1.75rem;
-            }
-
-            .header h1 {
-                font-size: 1.6rem;
-            }
-        }
-
-        /* Large Tablet: 1024px - 1199px */
-        @media (min-width: 1024px) and (max-width: 1199px) {
-            .content {
-                grid-template-columns: repeat(2, 1fr);
-                gap: 1.25rem;
-                padding: 1.25rem 1.5rem;
-            }
-
-            .metrics-row {
-                grid-template-columns: repeat(2, 1fr);
-                gap: 0.875rem;
-            }
-
-            /* Center and constrain the orphaned 7th card */
-            .metrics-row .metric-card:nth-child(7) {
-                grid-column: 1 / -1;
-                max-width: calc(50% - 0.4375rem);
-                margin: 0 auto;
-            }
-
-            /* All charts span full width */
-            .chart-card {
-                grid-column: span 2;
-            }
-
-            .chart-card-wide {
-                grid-column: span 2;
-            }
-
-            .header {
-                padding: 1.25rem 1.5rem;
-            }
-
-            .header h1 {
-                font-size: 1.5rem;
             }
         }
 
