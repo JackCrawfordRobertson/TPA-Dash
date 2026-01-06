@@ -197,7 +197,21 @@
       /* Ultrawide Monitor Constraints */
       /* Responsive Design - Optimized Breakpoints */
 
-      /* Ultra-wide Desktop: 1920px+ */
+      /* Desktop: 1400px+ - Keep 4 columns and 7 metrics in one row */
+      @media (min-width: 1400px) {
+        .content {
+          grid-template-columns: repeat(4, 1fr);
+          gap: 1.5rem;
+          padding: 1.5rem 2rem;
+        }
+
+        .metrics-row {
+          grid-template-columns: repeat(7, 1fr);
+          gap: 1rem;
+        }
+      }
+
+      /* Large Desktop: 1920px+ - Just increase spacing */
       @media (min-width: 1920px) {
         .container {
           max-width: 2400px;
@@ -205,13 +219,11 @@
         }
 
         .content {
-          grid-template-columns: repeat(4, 1fr);
           gap: 2rem;
           padding: 2rem 3rem;
         }
 
         .metrics-row {
-          grid-template-columns: repeat(7, 1fr);
           gap: 1.5rem;
         }
 
@@ -220,39 +232,7 @@
         }
       }
 
-      /* Large Desktop: 1600px - 1919px */
-      @media (min-width: 1600px) and (max-width: 1919px) {
-        .content {
-          grid-template-columns: repeat(4, 1fr);
-          gap: 1.75rem;
-          padding: 1.75rem 2.5rem;
-        }
-
-        .metrics-row {
-          grid-template-columns: repeat(7, 1fr);
-          gap: 1.25rem;
-        }
-
-        .header {
-          padding: 1.5rem 2.5rem;
-        }
-      }
-
-      /* Medium Desktop: 1400px - 1599px */
-      @media (min-width: 1400px) and (max-width: 1599px) {
-        .content {
-          grid-template-columns: repeat(2, 1fr);
-          gap: 1.5rem;
-          padding: 1.5rem 2rem;
-        }
-
-        .metrics-row {
-          grid-template-columns: repeat(4, 1fr);
-          gap: 1rem;
-        }
-      }
-
-      /* Small Desktop: 1200px - 1399px */
+      /* Small Desktop: 1200px - 1399px - Drop to 2 columns */
       @media (min-width: 1200px) and (max-width: 1399px) {
         .content {
           grid-template-columns: repeat(2, 1fr);
