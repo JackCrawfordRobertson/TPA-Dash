@@ -1719,6 +1719,37 @@
         mapObserver.observe(mapContainer);
     }
 
+    // Function to send height to parent iframe
+    let lastSentHeight = 0;
+
+    function sendHeightToParent() {
+        // Calculate total dashboard height
+        const body = document.body;
+        const html = document.documentElement;
+        const height = Math.max(
+            body.scrollHeight,
+            body.offsetHeight,
+            html.clientHeight,
+            html.scrollHeight,
+            html.offsetHeight
+        );
+
+        // Only send if height changed by more than 50px (prevents mini-loops)
+        if (Math.abs(height - lastSentHeight) > 50) {
+            lastSentHeight = height;
+
+            // Send message to parent window
+            if (window.parent !== window) {
+                window.parent.postMessage({
+                    type: 'dashboard-height',
+                    height: height,
+                    dashboard: 'global-reach-growth'
+                }, '*');
+                console.log('Sent height to parent:', height + 'px');
+            }
+        }
+    }
+
     // Handle window resize for map (including zoom detection)
     let resizeTimeout;
     let currentZoom = window.devicePixelRatio || 1;
@@ -1739,15 +1770,21 @@
                     console.log('Map resized for viewport');
                 }
             }
-            // Don't send height on resize/zoom - map uses fixed iframe height
+
+            // Send height to parent on every resize (50px threshold prevents loops)
+            setTimeout(sendHeightToParent, 100);
         }, 250); // Debounce for 250ms
     });
 
-    // DISABLED: Dynamic height communication removed for map dashboard to prevent infinite loop
-    // The map's resize behavior conflicts with iframe height changes
-    // Use a fixed height for this dashboard's iframe instead
+    // Send initial height after map loads
+    setTimeout(sendHeightToParent, 1500);
 
-    console.log('Map dashboard loaded - using fixed iframe height');
+    // Also send height when page fully loads
+    window.addEventListener('load', function() {
+        setTimeout(sendHeightToParent, 1000);
+    });
+
+    console.log('Map dashboard loaded - with responsive iframe height communication');
 </script>
 
 </body>
