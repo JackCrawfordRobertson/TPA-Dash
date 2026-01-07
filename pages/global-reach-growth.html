@@ -372,15 +372,17 @@
             .sidebar {
                 display: grid;
                 grid-template-columns: repeat(2, 1fr);
-                gap: 0.75rem;
-                flex: none;
-                min-height: auto;
+                gap: 0.5rem;
+                flex: 0 0 auto;
+                max-height: 160px;
                 overflow: hidden;
+                padding: 0.5rem;
             }
 
             .metric-pullout {
                 flex: none;
-                min-height: auto;
+                min-height: 0;
+                padding: 0.6rem;
             }
 
             /* 5th country widget maintains same width as other columns but centered */
