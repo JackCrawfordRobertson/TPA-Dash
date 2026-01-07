@@ -86,7 +86,7 @@
         overflow-x: hidden;
         padding: 1.5rem 2rem;
         display: grid;
-        grid-template-columns: 1fr 1fr 1fr 1fr;
+        grid-template-columns: 1fr 1fr 1fr;
         grid-template-rows: auto auto;
         gap: 1.5rem;
         width: 100%;
@@ -204,10 +204,10 @@
       /* Ultrawide Monitor Constraints */
       /* Responsive Design - Optimized Breakpoints */
 
-      /* Desktop: 1024px+ - Keep 4 columns and 7 metrics in one row */
+      /* Desktop: 1024px+ - Keep 3 columns and 7 metrics in one row */
       @media (min-width: 1024px) {
         .content {
-          grid-template-columns: repeat(4, 1fr);
+          grid-template-columns: repeat(3, 1fr);
           gap: 1.5rem;
           padding: 1.5rem 2rem;
         }
@@ -520,18 +520,6 @@
           </div>
         </div>
 
-        <!-- Biggest Opportunities Ahead -->
-        <div class="chart-card">
-          <div class="chart-title">Biggest opportunities ahead</div>
-          <p style="font-size: 0.8rem; color: #9ca3af; margin-bottom: 1rem">
-            Financial crime 360 survey • Payments intelligence - Future
-            opportunity assessment
-          </p>
-          <div class="chart-container">
-            <canvas id="aiChart"></canvas>
-          </div>
-        </div>
-
         <!-- Challenges Trend -->
         <div class="chart-card">
           <div class="chart-title">Main industry challenges</div>
@@ -767,85 +755,7 @@
         });
       }
 
-      // 3. Biggest Opportunities Ahead Chart
-      const aiCtx = document.getElementById("aiChart");
-      if (aiCtx) {
-        const isMobileAI = window.innerWidth <= 768;
-        new Chart(aiCtx, {
-          type: "bar",
-          plugins: isMobileAI ? [ChartDataLabels] : [],
-          data: {
-            labels: [
-              "Other",
-              "AI",
-              "Digital currencies",
-              "Cross-border\npayments",
-              "Open Banking",
-              "Real-time\npayments",
-              "Embedded\ncommerce",
-              "Digital wallets",
-            ],
-            datasets: [
-              {
-                data: [35, 24, 7, 5, 3, 3, 2, 2],
-                backgroundColor: chartColors.greenVariants.slice(0, 8),
-                borderRadius: 5,
-                borderWidth: 0,
-              },
-            ],
-          },
-          options: {
-            indexAxis: "y",
-            responsive: true,
-            maintainAspectRatio: false,
-            plugins: {
-              legend: { display: false },
-              tooltip: {
-                backgroundColor: "#323D4D",
-                padding: 10,
-                titleColor: "#FFFFFF",
-                bodyColor: "#E0E0E0",
-                borderColor: "#01D6B0",
-                borderWidth: 1,
-                callbacks: {
-                  label: (context) => Math.round(context.parsed.x) + "%",
-                },
-              },
-              datalabels: {
-                display: isMobileAI,
-                color: "#FFFFFF",
-                font: {
-                  size: window.innerWidth <= 480 ? 8 : 10,
-                  weight: "bold",
-                },
-                formatter: (value) => {
-                  return value >= 2 ? Math.round(value) + "%" : "";
-                },
-                anchor: "end",
-                align: "right",
-              },
-            },
-            scales: {
-              x: {
-                beginAtZero: true,
-                max: 40,
-                grid: { color: "#3A4655" },
-                ticks: {
-                  color: "#E0E0E0",
-                  font: { size: 12 },
-                  callback: (value) => value + "%",
-                },
-              },
-              y: {
-                grid: { display: false },
-                ticks: { color: "#E0E0E0", font: { size: 12, weight: "500" } },
-              },
-            },
-          },
-        });
-      }
-
-      // 4. Challenges Trend Chart
+      // 3. Challenges Trend Chart
       const challengesCtx = document.getElementById("challengesChart");
       if (challengesCtx) {
         new Chart(challengesCtx, {
@@ -944,14 +854,12 @@
       let chartInstances = {
         budget: null,
         outlook: null,
-        ai: null,
         challenges: null,
       };
 
       // Initialize all charts
       function initializeCharts() {
         const isMobileBudget = window.innerWidth <= 768;
-        const isMobileAI = window.innerWidth <= 768;
 
         // Destroy existing charts if they exist (prevents "Canvas already in use" error)
         if (chartInstances.budget) {
@@ -972,7 +880,7 @@
         }
 
         // Also check if Chart.js has any charts on these canvases and destroy them
-        ["budgetChart", "outlookChart", "aiChart", "challengesChart"].forEach(
+        ["budgetChart", "outlookChart", "challengesChart"].forEach(
           function (canvasId) {
             const canvas = document.getElementById(canvasId);
             if (canvas) {
@@ -1118,87 +1026,7 @@
           });
         }
 
-        // 3. Biggest Opportunities Ahead Chart
-        const aiCtx = document.getElementById("aiChart");
-        if (aiCtx) {
-          chartInstances.ai = new Chart(aiCtx, {
-            type: "bar",
-            plugins: isMobileAI ? [ChartDataLabels] : [],
-            data: {
-              labels: [
-                "Other",
-                "AI",
-                "Digital currencies",
-                "Cross-border\npayments",
-                "Open Banking",
-                "Real-time\npayments",
-                "Embedded\ncommerce",
-                "Digital wallets",
-              ],
-              datasets: [
-                {
-                  data: [35, 24, 7, 5, 3, 3, 2, 2],
-                  backgroundColor: chartColors.greenVariants.slice(0, 8),
-                  borderRadius: 5,
-                  borderWidth: 0,
-                },
-              ],
-            },
-            options: {
-              indexAxis: "y",
-              responsive: true,
-              maintainAspectRatio: false,
-              plugins: {
-                legend: { display: false },
-                tooltip: {
-                  backgroundColor: "#323D4D",
-                  padding: 10,
-                  titleColor: "#FFFFFF",
-                  bodyColor: "#E0E0E0",
-                  borderColor: "#01D6B0",
-                  borderWidth: 1,
-                  callbacks: {
-                    label: (context) => Math.round(context.parsed.x) + "%",
-                  },
-                },
-                datalabels: {
-                  display: isMobileAI,
-                  color: "#FFFFFF",
-                  font: {
-                    size: window.innerWidth <= 480 ? 8 : 10,
-                    weight: "bold",
-                  },
-                  formatter: (value) => {
-                    return value >= 2 ? Math.round(value) + "%" : "";
-                  },
-                  anchor: "end",
-                  align: "right",
-                },
-              },
-              scales: {
-                x: {
-                  beginAtZero: true,
-                  max: 40,
-                  grid: { color: "#3A4655" },
-                  ticks: {
-                    color: "#E0E0E0",
-                    font: { size: 12 },
-                    callback: (value) => value + "%",
-                  },
-                },
-                y: {
-                  grid: { display: false },
-                  ticks: {
-                    color: "#E0E0E0",
-                    font: { size: 12, weight: "500" },
-                  },
-                },
-              },
-            },
-          });
-        }
-
-        // 4. Challenges Trend Chart
+        // 3. Challenges Trend Chart
         const challengesCtx = document.getElementById("challengesChart");
         if (challengesCtx) {
           chartInstances.challenges = new Chart(challengesCtx, {
