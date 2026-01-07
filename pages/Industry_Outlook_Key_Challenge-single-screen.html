@@ -1303,20 +1303,41 @@
       // Initialize charts on page load
       initializeCharts();
 
+      // Function to force complete dashboard rerender
+      function forceCompleteRerender() {
+        // Force browser to recalculate layout
+        const container = document.querySelector('.container') || document.body;
+
+        // Trigger a reflow by reading offsetHeight
+        void container.offsetHeight;
+
+        // Force repaint by temporarily toggling display
+        const display = container.style.display;
+        container.style.display = 'none';
+        void container.offsetHeight;
+        container.style.display = display;
+
+        // Rebuild all charts with new dimensions
+        initializeCharts();
+        console.log("Complete dashboard rerender - new viewport size:", window.innerWidth);
+      }
+
       // Handle window resize with debouncing - ALWAYS rebuild for smooth resizing
       let resizeTimeout;
       window.addEventListener("resize", function () {
         clearTimeout(resizeTimeout);
         resizeTimeout = setTimeout(function () {
-          // Always rebuild charts on ANY resize/zoom for smooth, consistent rendering
-          initializeCharts();
-          console.log("Charts rebuilt - smooth resize");
+          // Force complete rerender of entire dashboard
+          forceCompleteRerender();
 
-          // Only send height when breakpoint changes (prevents iframe loop)
+          // Send height on every resize (not just breakpoint changes)
+          // The sendHeightToParent function has built-in protection against infinite loops
+          setTimeout(sendHeightToParent, 100);
+
+          // Track breakpoint for reference
           const newBreakpoint = window.innerWidth <= 768 ? "mobile" : "desktop";
           if (newBreakpoint !== currentBreakpoint) {
             currentBreakpoint = newBreakpoint;
-            setTimeout(sendHeightToParent, 100);
             console.log("Breakpoint changed to:", currentBreakpoint);
           }
         }, 250); // Debounce for 250ms
