@@ -1125,7 +1125,13 @@
                     type: 'bar',
                     plugins: isMobileServiceFees ? [ChartDataLabels] : [],
                     data: {
-                        labels: ['Credit Card', 'Debit Card', 'BNPL', 'Digital Wallet', 'Digital Currency'],
+labels: [
+  'Credit cards',
+  'Debit cards',
+  'BNPL services',
+  'Digital wallets',
+  'Digital currencies'
+],
                         datasets: [{
                             label: 'Service Fee Range (%)',
                             data: [2.5, 1.0, 4.25, 1.5, 0.5],
