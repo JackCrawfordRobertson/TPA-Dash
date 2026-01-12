@@ -259,6 +259,12 @@
             transform: translateY(-2px);
         }
 
+        .metric-pullout-highlighted {
+            border-color: var(--accent-primary);
+            box-shadow: 0 4px 12px rgba(1, 214, 176, 0.15);
+            transform: translateY(-2px);
+        }
+
         .metric-pullout-rank {
             font-size: clamp(0.6rem, 1vw, 0.7rem);
             color: var(--text-tertiary);
@@ -827,7 +833,7 @@
                     <div class="metric-pullout-label">Digital payment value 2025</div>
                 </div>
 
-                <div class="metric-pullout">
+                <div class="metric-pullout metric-pullout-highlighted">
                     <div class="metric-pullout-rank">5th Rank</div>
                     <div class="metric-pullout-name">United Kingdom</div>
                     <div class="metric-pullout-value">$562bn</div>
@@ -1466,19 +1472,6 @@
         let hoveredFeatureId = null;
         let selectedFeatureId = null;
         let tooltipChart = null;
-
-        // Set UK as always visible highlight on page load
-        let ukFeatureId = null;
-        for (let [featureId, countryData] of countryDataMap.entries()) {
-            if (countryData.name === 'United Kingdom') {
-                ukFeatureId = featureId;
-                break;
-            }
-        }
-        if (ukFeatureId !== null) {
-            hoveredFeatureId = ukFeatureId;
-            map.setFeatureState({ source: 'countries', id: ukFeatureId }, { hover: true });
-        }
 
         // Create bar chart for tooltip
         function createTooltipChart(countryData) {
