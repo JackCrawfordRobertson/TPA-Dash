@@ -1467,6 +1467,19 @@
         let selectedFeatureId = null;
         let tooltipChart = null;
 
+        // Set UK as always visible highlight on page load
+        let ukFeatureId = null;
+        for (let [featureId, countryData] of countryDataMap.entries()) {
+            if (countryData.name === 'United Kingdom') {
+                ukFeatureId = featureId;
+                break;
+            }
+        }
+        if (ukFeatureId !== null) {
+            hoveredFeatureId = ukFeatureId;
+            map.setFeatureState({ source: 'countries', id: ukFeatureId }, { hover: true });
+        }
+
         // Create bar chart for tooltip
         function createTooltipChart(countryData) {
             const canvas = document.getElementById('tooltip-chart');
